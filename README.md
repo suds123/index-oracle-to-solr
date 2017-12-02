@@ -140,9 +140,50 @@ Uploading /opt/bitnami/apache-solr/configset/conf for config _default to ZooKeep
 
 #### 2.1.5 Verify if DataImportHandler is visible
 Open in browser - http://localhost:8983/solr/#/corp-transactions/dataimport
-You would see the configured data import handler here if all went well.
+You would see the configured data import handler here, if all went well.
 
 ## 2.2 Add fields to index
+```
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"acquired_processed", "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"auth_code",  "type":"string",  "indexed":false,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"card_brand",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"card_expiry_date",  "type":"string",  "indexed":false,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"card_number",  "type":"string",  "indexed":false,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"card_number_left",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"card_number_right",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"card_product_type_code",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"card_product_type_name",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"card_sequence_no",  "type":"string",  "indexed":false,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"company",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"company_name",  "type":"string",  "indexed":false,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"debit_credit",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"group",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"group_name",  "type":"string",  "indexed":false,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"outlet_id",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"originators_transaction_ref",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"outlet_name",  "type":"string",  "indexed":false,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"receipt_number",  "type":"string",  "indexed":false,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"scheme",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"settlement_amount",  "type":"pdouble", "indexed":false, "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"settlement_currency",  "type":"string",  "indexed":false,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"ticket_number",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"transaction_amount",  "type":"pdouble",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"transaction_currency",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"transaction_source_name",  "type":"strings",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"transaction_type_name",  "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"trading_date","type":"pdate", "indexed":true,"stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"transaction_date","type":"pdate","indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"processing_date","type":"pdate", "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
+```
+
+## 2.3 Verify the schema fields
+```
+curl -X GET -H 'Content-type:application/json' http://localhost:8983/solr/corp-transactions/schema/fields
+```
+
+# 3. Run full import
+Open in browser - http://localhost:8983/solr/#/corp-transactions/dataimport
+Select the data import handler, command as "full-import" and click on "Execute".
 
 
 ## Frequently used Solr commands reference
@@ -188,6 +229,13 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{ "add-field": {"
 ```
 List fields in a schema
 ```
-curl -X GET -H 'Content-type:application/json' http://localhost:8983/solr/<collection-name>/schema
+curl -X GET -H 'Content-type:application/json' http://localhost:8983/solr/<collection-name>/schema/fields
 ```
-
+Download config
+```
+bin/solr zk downconfig -z localhost:9983 -n _default -d /opt/bitnami/apache-solr/configset
+```
+Upload config
+```
+bin/solr zk upconfig -z localhost:9983 -n _default -d /opt/bitnami/apache-solr/configset
+```
