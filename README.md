@@ -62,7 +62,31 @@ Downloading configset _default from ZooKeeper at localhost:9983 to directory /op
 cd configset/conf
 ```
 
-## Frequently used commands reference
+### Add DataImportHandler and ojdbc6.jar
+```
+  **<lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-dataimporthandler-.*\.jar" />**
+  <lib dir="${solr.install.dir:../../../..}/contrib/extraction/lib" regex=".*\.jar" />
+  <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-cell-\d.*\.jar" />
+
+  <lib dir="${solr.install.dir:../../../..}/contrib/clustering/lib/" regex=".*\.jar" />
+  <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-clustering-\d.*\.jar" />
+
+  <lib dir="${solr.install.dir:../../../..}/contrib/langid/lib/" regex=".*\.jar" />
+  <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-langid-\d.*\.jar" />
+
+  <lib dir="${solr.install.dir:../../../..}/contrib/velocity/lib" regex=".*\.jar" />
+  <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-velocity-\d.*\.jar" />
+  **<lib dir="${solr.install.dir:../../../..}/dist/" regex="ojdbc6.jar" />**
+```
+
+
+Upload config
+```
+bin/solr zk upconfig -z localhost:9983 -n _default -d /opt/bitnami/apache-solr/configset
+
+```
+
+## Frequently used Solr commands reference
 
 Create Collection (N = number of shards, M = number of replicas)
 ```
