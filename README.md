@@ -2,12 +2,12 @@
 
 This is a demo for how to use “DataImport” tool provided by Apache Solr to index data from Oracle DB.
 
-# Infrastructure
+# 1. Infrastructure
 For this demo, I’ve used two virtual machines on Google Cloud Platform:
 1. Oracle XE – 1 machine of type n1-standard-1 (1 vCPU, 3.75 GB memory) and 30GB standard disk. OS is Ubuntu 16.04 and Oracle 11.2.0.2.0 XE instance. 
 2. Solr cloud – 1 machine of type - n1-standard-4 (4 vCPUs, 15 GB memory) and 20GB SSD disk. The VM is a certified prebuilt Solr image from Bitnami. OS is Debian 8 and packages installed are  Apache 2.4.29, Java 1.8.0_151, OpenSSL 1.0.2m, and Apache Solr 7.1.0
 
-# 1. Oracle
+# 2. Oracle
 We will create a table in Oracle database named fact_transactions with sample data.
 
 |COLUMN|DATA-TYPE|
@@ -43,7 +43,7 @@ We will create a table in Oracle database named fact_transactions with sample da
 |TRANSACTION_AMOUNT|	NUMBER(22,8)|
 |TRANSACTION_CURRENCY|	VARCHAR2(5 BYTE)|
 
-# 2. SolrCloud
+# 3. SolrCloud
 Bitnami certified Solr is installed at this path out-of-the-box - /opt/bitnami/apache-solr
 
 Create a collection named corp-transactions with 2 replicas and 3 shards and using \_default configSet.
@@ -52,9 +52,9 @@ cd /opt/bitnami/apache-solr
 bin/solr create -c corp-transactions -s 3 -rf 2
 ```
 
-## 2.1 Config
+## 3.1 Config
 
-#### 2.1.1 Create a configset directory and download the config.
+#### 3.1.1 Create a configset directory and download the config.
 ```
 mkdir configset
 bin/solr zk downconfig -z localhost:9983 -n _default -d /opt/bitnami/apache-solr/configset
@@ -63,7 +63,7 @@ Downloading configset _default from ZooKeeper at localhost:9983 to directory /op
 cd configset/conf
 ```
 
-#### 2.1.2 Edit solrconfig.xml
+#### 3.1.2 Edit solrconfig.xml
 Add DataImportHandler (first line) and ojdbc6.jar (last line)
 ```
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-dataimporthandler-.*\.jar" />
@@ -90,7 +90,7 @@ Add Oracle requestHandler
   </requestHandler>	
 ```  
 
-#### 2.1.3 Create oracle-data-config.xml
+#### 3.1.3 Create oracle-data-config.xml
 ```
 <dataConfig>
   <dataSource driver="oracle.jdbc.OracleDriver" url="jdbc:oracle:thin:@localhost:1521/xe" user="solardemo" password="xxx" />
@@ -132,17 +132,17 @@ Add Oracle requestHandler
 </dataConfig>
 ```
 
-#### 2.1.4 Upload config (edited solrconfig.xml and newly created oracle-data-config.xml)
+#### 3.1.4 Upload config (edited solrconfig.xml and newly created oracle-data-config.xml)
 ```
 bin/solr zk upconfig -z localhost:9983 -n _default -d /opt/bitnami/apache-solr/configset
 Uploading /opt/bitnami/apache-solr/configset/conf for config _default to ZooKeeper at localhost:9983
 ```
 
-#### 2.1.5 Verify if DataImportHandler is visible
+#### 3.1.5 Verify if DataImportHandler is visible
 Open in browser - http://localhost:8983/solr/#/corp-transactions/dataimport
 You would see the configured data import handler here, if all went well.
 
-## 2.2 Add fields to index
+## 3.2 Add fields to index
 ```
 curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"acquired_processed", "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
 curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"auth_code",  "type":"string",  "indexed":false,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
@@ -176,13 +176,14 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"na
 curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"processing_date","type":"pdate", "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
 ```
 
-## 2.3 Verify the schema fields
+## 3.3 Verify the schema fields
 ```
 curl -X GET -H 'Content-type:application/json' http://localhost:8983/solr/corp-transactions/schema/fields
 ```
 
-# 3. Run full import
-Open in browser - http://localhost:8983/solr/#/corp-transactions/dataimport
+# 4. Run full import
+Open in browser - http://localhost:8983/solr/#/corp-transactions/dataimport .
+
 Select the data import handler, command as "full-import" and click on "Execute".
 
 
