@@ -187,7 +187,7 @@ Open in browser - http://localhost:8983/solr/#/corp-transactions/dataimport .
 Select the data import handler, command as "full-import" and click on "Execute".
 
 
-## Frequently used Solr commands reference
+# 5. Frequently used Solr commands reference
 
 Create Collection (N = number of shards, M = number of replicas)
 ```
