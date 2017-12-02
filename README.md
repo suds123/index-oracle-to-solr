@@ -42,3 +42,16 @@ I have created a table in Oracle database named fact_transactions with 27 millio
 |SETTLEMENT_CURRENCY|	VARCHAR2(5 BYTE)|
 |TRANSACTION_AMOUNT|	NUMBER(22,8)|
 |TRANSACTION_CURRENCY|	VARCHAR2(5 BYTE)|
+
+# SolrCloud
+Bitnami certified Solr is installed at this path - /opt/bitnami/apache-solr
+
+A collection named corp-transactions is created with 2 replicas and 3 shards and using \_default configSet.
+```cd /opt/bitnami/apache-solr
+bin/solr create -c corp-transactions -s 3 -rf 2
+```
+
+## Config
+Download 
+
+
