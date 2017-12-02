@@ -44,14 +44,54 @@ I have created a table in Oracle database named fact_transactions with 27 millio
 |TRANSACTION_CURRENCY|	VARCHAR2(5 BYTE)|
 
 # SolrCloud
-Bitnami certified Solr is installed at this path - /opt/bitnami/apache-solr
+Bitnami certified Solr is installed at this path out-of-the-box - /opt/bitnami/apache-solr
 
-A collection named corp-transactions is created with 2 replicas and 3 shards and using \_default configSet.
-```cd /opt/bitnami/apache-solr
+Create a collection named corp-transactions with 2 replicas and 3 shards and using \_default configSet.
+```
+cd /opt/bitnami/apache-solr
 bin/solr create -c corp-transactions -s 3 -rf 2
 ```
 
 ## Config
-Download 
+Create a configset directory and download the config.
+```
+mkdir configset
+bin/solr zk downconfig -z localhost:9983 -n _default -d /opt/bitnami/apache-solr/configset
+  Downloading configset _default from ZooKeeper at localhost:9983 to directory /opt/bitnami/apache-solr/configset/conf
+cd configset/conf
+```
 
+## Frequently used commands reference
+
+Create Collection
+```
+bin/solr create -c <collection-name> -s N -rf M
+```
+
+Delete collection
+```
+bin/solr delete -c <collection-name>
+```
+
+Stop all nodes
+```
+bin/solr stop -all
+```
+
+Start / Restart SolrCloud
+```
+bin/solr restart -c -p 8983 -s example/cloud/node1/solr
+bin/solr restart -c -p 7574 -z localhost:9983 -s example/cloud/node2/solr
+bin/solr restart -c -p 8984 -z localhost:9983 -s example/cloud/node3/solr
+```
+
+Delete all documents
+```
+curl http://localhost:8983/solr/<collection-name>/update -H "Content-Type: text/xml" --data-binary '<delete><query>*:*</query></delete>'
+```
+
+Index a csv using post
+```
+bin/post -c <collection-name> <path and name of csv file>
+```
 
