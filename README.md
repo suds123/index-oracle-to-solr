@@ -8,7 +8,7 @@ For this demo, I’ve used two virtual machines on Google Cloud Platform:
 2. Solr cloud – 1 machine of type - n1-standard-4 (4 vCPUs, 15 GB memory) and 20GB SSD disk. The VM is a certified prebuilt Solr image from Bitnami. OS is Debian 8 and packages installed are  Apache 2.4.29, Java 1.8.0_151, OpenSSL 1.0.2m, and Apache Solr 7.1.0
 
 # Oracle
-I have created a table in Oracle database named fact_transactions with 27 million records.
+I have created a table in Oracle database named fact_transactions with sample data.
 
 |COLUMN|DATA-TYPE|
 |------|---------|
