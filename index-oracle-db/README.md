@@ -198,9 +198,9 @@ Import status after completion -
 ![Import Status](import-status.png)
 
 Size of index -
-⋅⋅* shard-1 - Num Docs:9017585, Size - 1.53 GB
-⋅⋅* shard-2 - Num Docs:9012794, Size - 1.52 GB
-⋅⋅* shard-3 - Num Docs:9014974, Size - 1.52 GB
+* shard-1 - Num Docs:9017585, Size - 1.53 GB
+* shard-2 - Num Docs:9012794, Size - 1.52 GB
+* shard-3 - Num Docs:9014974, Size - 1.52 GB
 
 # 5. Querying Imported Data
 Query everything - 
