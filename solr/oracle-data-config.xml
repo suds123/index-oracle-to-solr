@@ -1,0 +1,38 @@
+<dataConfig>
+    <dataSource driver="oracle.jdbc.OracleDriver" url="jdbc:oracle:thin:@localhost:1521/xe" user="solrdemo" password="xxxx" />
+    <document>
+        <entity name="employees" query='select rownum as id, mid as outlet_id, outlet_name, company, company_name, group_name, trading_date, processing_date, card_number, card_number_left, card_number_right, card_expiry_date, transaction_date, originators_transaction_ref, ticket_number, transaction_type_name, transaction_source_name, receipt_number, settlement_amount, settlement_currency, transaction_amount, transaction_currency, auth_code, card_brand, card_product_type_name, card_product_type_code,scheme, debit_credit, card_sequence_no, acquired_processed, "GROUP" from fact_transactions'>
+                        <field column="id" name="id" />
+                        <field column="outlet_id" name="outlet_id" />
+                        <field column="outlet_name" name="outlet_name" />
+                        <field column="company" name="company" />
+                        <field column="company_name" name="company_name" />
+                        <field column="group_name" name="group_name" />
+                        <field column="trading_date" name="trading_date" />
+                        <field column="processing_date" name="processing_date" />
+                        <field column="card_number" name="card_number" />
+                        <field column="card_number_left" name="card_number_left" />
+                        <field column="card_number_right" name="card_number_right" />
+                        <field column="card_expiry_date" name="card_expiry_date" />
+                        <field column="transaction_date" name="transaction_date" />
+                        <field column="originators_transaction_ref" name="originators_transaction_ref" />
+                        <field column="ticket_number" name="ticket_number" />
+                        <field column="transaction_type_name" name="transaction_type_name" />
+                        <field column="transaction_source_name" name="transaction_source_name" />
+                        <field column="receipt_number" name="receipt_number" />
+                        <field column="settlement_amount" name="settlement_amount" />
+                        <field column="settlement_currency" name="settlement_currency" />
+                        <field column="transaction_amount" name="transaction_amount" />
+                        <field column="transaction_currency" name="transaction_currency" />
+                        <field column="auth_code" name="auth_code" />
+                        <field column="card_brand" name="card_brand" />
+                        <field column="card_product_type_name" name="card_product_type_name" />
+                        <field column="card_product_type_code" name="card_product_type_code" />
+                        <field column="scheme" name="scheme" />
+                        <field column="debit_credit" name="debit_credit" />
+                        <field column="card_sequence_no" name="card_sequence_no" />
+                        <field column="acquired_processed" name="acquired_processed" />
+                        <field column="group" name="group" />
+        </entity>
+    </document>
+</dataConfig>
