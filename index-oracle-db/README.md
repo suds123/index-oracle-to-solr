@@ -54,7 +54,7 @@ bin/solr create -c corp-transactions -s 3 -rf 2
 
 ## 3.1 Config
 
-#### 3.1.1 Create a configset directory and download the config.
+#### 3.1.1 Create a configset directory and download the config
 ```
 mkdir configset
 bin/solr zk downconfig -z localhost:9983 -n _default -d /opt/bitnami/apache-solr/configset
@@ -62,11 +62,14 @@ Downloading configset _default from ZooKeeper at localhost:9983 to directory /op
 
 cd configset/conf
 ```
+#### 3.1.2 Download Oracle JDBC driver
+Download ojdbc6.jar from oracle.com and copy it to Solr instance classpath - ${solr.install.dir:../../../..}/dist/ folder. In our case this is - /opt/bitnami/apache-solr/dist folder. 
 
-#### 3.1.2 Edit solrconfig.xml
-Add DataImportHandler (first line) and ojdbc6.jar (last line)
+#### 3.1.3 Edit solrconfig.xml
+Add DataImportHandler (first line) and ojdbc6.jar (second line)
 ```
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-dataimporthandler-.*\.jar" />
+  <lib dir="${solr.install.dir:../../../..}/dist/" regex="ojdbc6.jar" />  
   <lib dir="${solr.install.dir:../../../..}/contrib/extraction/lib" regex=".*\.jar" />
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-cell-\d.*\.jar" />
 
@@ -78,7 +81,6 @@ Add DataImportHandler (first line) and ojdbc6.jar (last line)
 
   <lib dir="${solr.install.dir:../../../..}/contrib/velocity/lib" regex=".*\.jar" />
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-velocity-\d.*\.jar" />
-  <lib dir="${solr.install.dir:../../../..}/dist/" regex="ojdbc6.jar" />
 ```
 
 Add Oracle requestHandler
@@ -90,7 +92,8 @@ Add Oracle requestHandler
   </requestHandler>	
 ```  
 
-#### 3.1.3 Create oracle-data-config.xml
+#### 3.1.4 Create oracle-data-config.xml
+This data source configuration includes the connection information such as the Oracle Database JDBC driver class, the connection URL, and username and password. The oracle-data-config.xml file also specifies the SQL query used to fetch data in full import and delta import. The mapping of the Oracle Database table columns to Solr document fields is also configured in oracle-data-config.xml.
 ```
 <dataConfig>
   <dataSource driver="oracle.jdbc.OracleDriver" url="jdbc:oracle:thin:@localhost:1521/xe" user="solardemo" password="xxx" />
@@ -132,13 +135,13 @@ Add Oracle requestHandler
 </dataConfig>
 ```
 
-#### 3.1.4 Upload config (edited solrconfig.xml and newly created oracle-data-config.xml)
+#### 3.1.5 Upload config (edited solrconfig.xml and newly created oracle-data-config.xml)
 ```
 bin/solr zk upconfig -z localhost:9983 -n _default -d /opt/bitnami/apache-solr/configset
 Uploading /opt/bitnami/apache-solr/configset/conf for config _default to ZooKeeper at localhost:9983
 ```
 
-#### 3.1.5 Verify if DataImportHandler is visible
+#### 3.1.6 Verify if DataImportHandler is visible
 Open in browser - http://localhost:8983/solr/#/corp-transactions/dataimport.
 
 You would see the configured data import handler here, if all went well.
@@ -146,6 +149,7 @@ You would see the configured data import handler here, if all went well.
 ![Data Import Handler](data-import-handler.png)
 
 ## 3.2 Add fields to index
+We are using managed-schema, therefore to add fields we will use solr provided API to add fields used in the document indexed in Solr from data imported from Oracle Database.
 ```
 curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"acquired_processed", "type":"string",  "indexed":true,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
 curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field":{"name":"auth_code",  "type":"string",  "indexed":false,  "stored":true}}' http://localhost:8983/solr/corp-transactions/schema
@@ -192,6 +196,25 @@ Select the data import handler, command as "full-import" and click on "Execute".
 Import status after completion -
 
 ![Import Status](import-status.png)
+
+Size of index -
+-- shard-1 - Num Docs:9017585, Size - 1.53 GB
+-- shard-2 - Num Docs:9012794, Size - 1.52 GB
+-- shard-3 - Num Docs:9014974, Size - 1.52 GB
+
+# 5. Querying Imported Data
+
+http://35.189.118.103:8984/solr/corp-transactions/select?fq=outlet_id:("45623133" "45700493" "45692263" "45692763" "45497633" "45622743" "45693493" "45623133" "45692263" "45622743")&q=*:*
+{
+  "responseHeader":{
+    "zkConnected":true,
+    "status":0,
+    "QTime":93,
+    "params":{
+      "q":"*:*",
+      "fq":"outlet_id:(\"45623133\" \"45700493\" \"45692263\" \"45692763\" \"45497633\" \"45622743\" \"45693493\" \"45623133\" \"45692263\" \"45622743\")",
+      "_":"1512251518262"}},
+  "response":{"numFound":290749,"start":0,"maxScore":1.0,"docs":
 
 # 5. Frequently used Solr commands reference
 
