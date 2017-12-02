@@ -63,7 +63,7 @@ cd configset/conf
 
 ## Frequently used commands reference
 
-Create Collection
+Create Collection (N = number of shards, M = number of replicas)
 ```
 bin/solr create -c <collection-name> -s N -rf M
 ```
