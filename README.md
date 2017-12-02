@@ -57,7 +57,8 @@ Create a configset directory and download the config.
 ```
 mkdir configset
 bin/solr zk downconfig -z localhost:9983 -n _default -d /opt/bitnami/apache-solr/configset
-  Downloading configset _default from ZooKeeper at localhost:9983 to directory /opt/bitnami/apache-solr/configset/conf
+Downloading configset _default from ZooKeeper at localhost:9983 to directory /opt/bitnami/apache-solr/configset/conf
+
 cd configset/conf
 ```
 
