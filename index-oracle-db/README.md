@@ -204,6 +204,7 @@ Size of index -
 
 # 5. Querying Imported Data
 
+```
 http://35.189.118.103:8984/solr/corp-transactions/select?fq=outlet_id:("45623133" "45700493" "45692263" "45692763" "45497633" "45622743" "45693493" "45623133" "45692263" "45622743")&q=*:*
 {
   "responseHeader":{
@@ -215,7 +216,7 @@ http://35.189.118.103:8984/solr/corp-transactions/select?fq=outlet_id:("45623133
       "fq":"outlet_id:(\"45623133\" \"45700493\" \"45692263\" \"45692763\" \"45497633\" \"45622743\" \"45693493\" \"45623133\" \"45692263\" \"45622743\")",
       "_":"1512251518262"}},
   "response":{"numFound":290749,"start":0,"maxScore":1.0,"docs":
-
+```
 # 5. Frequently used Solr commands reference
 
 Create Collection (N = number of shards, M = number of replicas)
