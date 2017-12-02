@@ -141,6 +141,7 @@ Uploading /opt/bitnami/apache-solr/configset/conf for config _default to ZooKeep
 #### 3.1.5 Verify if DataImportHandler is visible
 Open in browser - http://localhost:8983/solr/#/corp-transactions/dataimport
 You would see the configured data import handler here, if all went well.
+![Data Import Handler](data-import-handler.png)
 
 ## 3.2 Add fields to index
 ```
@@ -185,7 +186,7 @@ curl -X GET -H 'Content-type:application/json' http://localhost:8983/solr/corp-t
 Open in browser - http://localhost:8983/solr/#/corp-transactions/dataimport .
 
 Select the data import handler, command as "full-import" and click on "Execute".
-
+![Import Status](import-status.png)
 
 # 5. Frequently used Solr commands reference
 
