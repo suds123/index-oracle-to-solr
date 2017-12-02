@@ -198,14 +198,30 @@ Import status after completion -
 ![Import Status](import-status.png)
 
 Size of index -
--- shard-1 - Num Docs:9017585, Size - 1.53 GB
--- shard-2 - Num Docs:9012794, Size - 1.52 GB
--- shard-3 - Num Docs:9014974, Size - 1.52 GB
+⋅⋅* shard-1 - Num Docs:9017585, Size - 1.53 GB
+⋅⋅* shard-2 - Num Docs:9012794, Size - 1.52 GB
+⋅⋅* shard-3 - Num Docs:9014974, Size - 1.52 GB
 
 # 5. Querying Imported Data
+Query everything - 
 
 ```
-http://35.189.118.103:8984/solr/corp-transactions/select?fq=outlet_id:("45623133" "45700493" "45692263" "45692763" "45497633" "45622743" "45693493" "45623133" "45692263" "45622743")&q=*:*
+http://localhost:8983/solr/corp-transactions/select?q=*:*
+{
+  "responseHeader":{
+    "zkConnected":true,
+    "status":0,
+    "QTime":102,
+    "params":{
+      "q":"*:*",
+      "_":"1512251518262"}},
+  "response":{"numFound":27045353,"start":0,"maxScore":1.0,"docs":
+```
+
+Query with a filter - 
+
+```
+http://localhost:8983/solr/corp-transactions/select?fq=outlet_id:("45623133" "45700493" "45692263" "45692763" "45497633" "45622743" "45693493" "45623133" "45692263" "45622743")&q=*:*
 {
   "responseHeader":{
     "zkConnected":true,
@@ -217,7 +233,7 @@ http://35.189.118.103:8984/solr/corp-transactions/select?fq=outlet_id:("45623133
       "_":"1512251518262"}},
   "response":{"numFound":290749,"start":0,"maxScore":1.0,"docs":
 ```
-# 5. Frequently used Solr commands reference
+# 6. Frequently used Solr commands reference
 
 Create Collection (N = number of shards, M = number of replicas)
 ```
