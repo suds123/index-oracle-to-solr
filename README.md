@@ -1,4 +1,4 @@
-# All things Solr
+# All things Data
 
  [Install SolrCloud](install-solr-cloud/README.md)
  
