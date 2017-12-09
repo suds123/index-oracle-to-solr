@@ -1,4 +1,4 @@
-# High performance data architecture
+# Introduction
 
 This repository describes the search for an ideal fast-search-analytics product which can sit between a traditional RDBMS or hadoop filesystem and application, and provide under 100ms query performance, text search capability, analytics, high availability etc.
 
