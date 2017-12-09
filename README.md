@@ -45,4 +45,4 @@ For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text
 
 ## Apache Ignite
 
-## Product recommendation
+# Product recommendation
