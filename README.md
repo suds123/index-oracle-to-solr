@@ -4,7 +4,7 @@ This repository describes the search for an ideal fast-search-analytics product 
 
 This picture depicts what architecture/capability we are after:
 
-![Integral Layer](images/integral.PNG)
+![Integral Layer](images/integral.png)
 
 |Product|In-Memory|Persistence|Sec. Indexing|Text Search|Scalable|Availability|DR (CDCR)| Lang.|Release|
 |-------|---------|-----------|-------------|-----------|--------|------------|---------|------|-------|
