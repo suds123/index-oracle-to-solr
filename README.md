@@ -17,7 +17,7 @@ This table shows high level requirement for the product.
 |Oracle Text | ✖ cache| ✔    | ✔           | ✔✔ Inverted| Vertical | ✖  |✔  | C  |  |  
 |Postgresql| ✖    | ✔        | ✔           | ✔        | Horizontal| ✔ | ✔ | C | 1996 |  
 |MongoDB  | ✔ store|          | ✔          | ✔         | Horizontal | ✔ |  ✔| C++ |2009  |
-|Ignite (GG)| ✔ store | ✔    | ✔           | ✔✔ Lucene | Horizontal | ✔ |✔  |Java | 2015 / 2007 (GG) | 
+|Ignite (GG)| ✔ store | ✔    | ✔           | ✔✔ Lucene | Horizontal | ✔ |✔  |Java | 2007| 
 |EXASOL| ✔ store |            | ✔           | ✖        | Horizontal | ✔ | ✔ |  |2000  |  
 |VoltDB| ✔       |            |             | ✖        | Horizontal | ✔ | ✔ |Java  |  |  
 |Vertica|✖       | ✔         | ✔           | ✖        | Horizontal | ✔ |✔  |  | 2005 |  
@@ -28,7 +28,7 @@ This table shows high level requirement for the product.
 # Product evaluation
 For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text) and Apache Ignite.
 
-# Solr
+## Solr
  [Install SolrCloud](install-solr-cloud/README.md)
  
  [Index Oracle DB on Solr](index-oracle-db/README.md)
@@ -37,10 +37,12 @@ For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text
  
  [Solr performance](solr-performance/README.md)
  
-# Elasticsearch
+## Elasticsearch
 
 
-# Oracle (Text)
+## Oracle (Text)
 
 
-# Apache Ignite
+## Apache Ignite
+
+## Product recommendation
