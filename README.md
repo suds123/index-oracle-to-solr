@@ -43,37 +43,37 @@ For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text
   5. [Solr commands reference](solr/commands/README.md)
  
 ## Elasticsearch
-  1. Install Elastic cluster    [//]: # (elastic/install-cluster/README.md)
+  1. [Install Elastic cluster]  <!--(elastic/install-cluster/README.md)-->
  
-  2. [Index RDBMS on Elastic](elastic/index-oracle-db/README.md)
+  2. [Index RDBMS on Elastic]  <!--(elastic/index-oracle-db/README.md)-->
  
-  3. [Elastic security](elastic/security/README.md)
+  3. [Elastic security]  <!--(elastic/security/README.md)-->
  
-  4. [Elastic performance](elastic/performance/README.md)
+  4. [Elastic performance]  <!--(elastic/performance/README.md)-->
   
-  5. [Elastic commands reference](elastic/commands/README.md)
+  5. [Elastic commands reference]  <!--(elastic/commands/README.md)-->
 
 ## Oracle (Text)
-  1. [Configure Oracle Text](oracle-text/configure-text/README.md)
+  1. [Configure Oracle Text]  <!--(oracle-text/configure-text/README.md)-->
  
-  2. [Create Text Index](oracle-text/index-oracle-db/README.md)
+  2. [Create Text Index]  <!--(oracle-text/index-oracle-db/README.md)-->
  
-  3. [Text security](oracle-text/security/README.md)
+  3. [Text security]  <!--(oracle-text/security/README.md)-->
  
-  4. [Text performance](oracle-text/performance/README.md)
+  4. [Text performance]  <!--(oracle-text/performance/README.md)-->
   
-  5. [Text commands reference](oracle-text/commands/README.md)
+  5. [Text commands reference]  <!--(oracle-text/commands/README.md)-->
 
 ## Apache Ignite
-  1. [Install Ignite](ignite/install-ignite/README.md)
+  1. [Install Ignite]  <!--(ignite/install-ignite/README.md)-->
  
-  2. [Load RDBMS to Ignite](ignite/index-oracle-db/README.md)
+  2. [Load RDBMS to Ignite]  <!--(ignite/index-oracle-db/README.md)-->
  
-  3. [Ignite security](ignite/security/README.md)
+  3. [Ignite security]  <!--(ignite/security/README.md)-->
  
-  4. [Ignite performance](ignite/performance/README.md)
+  4. [Ignite performance]  <!--(ignite/performance/README.md)-->
   
-  5. [Ignite commands reference](ignite/commands/README.md)
+  5. [Ignite commands reference]  <!--(ignite/commands/README.md)-->
 
 # Product recommendation
 
