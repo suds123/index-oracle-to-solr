@@ -43,7 +43,7 @@ For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text
   5. [Solr commands reference](solr/commands/README.md)
  
 ## Elasticsearch
-  1. [Install Elastic cluster](elastic/install-cluster/README.md)
+  1. [Install Elastic cluster][//]: # (elastic/install-cluster/README.md)
  
   2. [Index RDBMS on Elastic](elastic/index-oracle-db/README.md)
  
