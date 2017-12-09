@@ -2,6 +2,10 @@
 
 This repository describes the search for an ideal fast-search-analytics product which can sit between a traditional RDBMS or hadoop filesystem and application, and provide under 100ms query performance, text search capability, analytics, high availability etc.
 
+This picture depicts what architecture/capability we are after:
+
+![Integral Layer](images/integral.PNG)
+
 |Product|In-Memory|Persistence|Sec. Indexing|Text Search|Scalable|Availability|DR (CDCR)| Lang.|Release|
 |-------|---------|-----------|-------------|-----------|--------|------------|---------|------|-------|
 |Solr   | ✖ cache | ✔        | ✔           | ✔✔✔ Lucene| Horizontal  |  |  |  |  |    
