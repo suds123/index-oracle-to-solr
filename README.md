@@ -14,7 +14,7 @@ This table shows high level requirement for the product.
 |-------|---------|-----------|-------------|-----------|--------|------------|---------|------|-------|
 |Solr   | ✖ cache | ✔        | ✔           | ✔✔✔ Lucene| Horizontal  |✔  |✔  | Java |  |    
 |Elasticsearch| ✖ cache| ✔   | ✔           | ✔✔✔ Lucene| Horizontal |✔  | ✔ | Java |   |  
-|Oracle Text | ✖ cache| ✔    | ✔           | ✔✔ Inverted| Vertical | ✖  |✔  | C  |  |  
+|Oracle (Text)| ✖ cache| ✔    | ✔           | ✔✔ Inverted| Vertical | ✖  |✔  | C  |  |  
 |Postgresql| ✖    | ✔        | ✔           | ✔        | Horizontal| ✔ | ✔ | C | 1996 |  
 |MongoDB  | ✔ store|          | ✔          | ✔         | Horizontal | ✔ |  ✔| C++ |2009  |
 |Ignite (GG)| ✔ store | ✔    | ✔           | ✔✔ Lucene | Horizontal | ✔ |✔  |Java | 2007| 
