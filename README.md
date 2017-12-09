@@ -29,13 +29,13 @@ This table shows high level requirement for the product.
 For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text) and Apache Ignite.
 
 ## Solr
- [Install SolrCloud](install-solr-cloud/README.md)
+ [Install SolrCloud](solr/install-solr-cloud/README.md)
  
  [Index Oracle DB on Solr](index-oracle-db/README.md)
  
- [Solr security](security/README.md)
+ [Solr security](solr/security/README.md)
  
- [Solr performance](solr-performance/README.md)
+ [Solr performance](solr/performance/README.md)
  
 ## Elasticsearch
 
