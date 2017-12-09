@@ -53,13 +53,13 @@ The products were tested on a single VM on GCP (4 vCPUs + 15GB RAM) with 27 mill
 
 |Selection criteria|Solr|Elasticsearch|Oracle(Text)|Ignite|
 |------------------|----|-------------|------------|------|
-|infrastructure implications|new VMs + SSD|new VMs + SSD |existing DB |new VMs + SSD |
-|security (functional authorisation) | | | | |
-|security (data role)| | | | |
+|Infrastructure implications|new VMs + SSD|new VMs + SSD |existing DB |new VMs + SSD |
+|security (functional) | | | | |
+|security (data)| | | | |
 |functional fit across our repositories to index| | | | |
-|performance benchmarks with volumes | | | | |
-|performance benchmarks with complex operations| | | | |
-|performance benchmarks with ETL|~5000/s, 30 stored + 19 indexed fields| | | |
+|performance of queries | | | | |
+|performance of complex queries| | | | |
+|performance of load|~5000/s, 30 stored + 19 indexed fields| | | |
 |maintainability | | | | |
 |supportability| | | | |
 |product support| | | | |
@@ -70,6 +70,6 @@ The products were tested on a single VM on GCP (4 vCPUs + 15GB RAM) with 27 mill
 |source support-RDBMS| | | | |
 |source support-OID,LDAP| | | | |
 |source support-logs| | | | |
-|source support-CMS e.g. WCC| | | | |
+|source support-CMS| | | | |
 |source support-files| | | | |
 |source support-JMS| | | | |
