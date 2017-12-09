@@ -8,7 +8,7 @@ This picture depicts what architecture/capability we are after:
 ![Integral Layer](images/integral.png)
 
 # Product feature comparisons
-This table shows high level requirement for the product. With what we are after it's unlikely a single product can satisfy all requirements, so it's likely there will be trade-offs therefore we have widen the scope to include a variety of technologies.
+This table shows high level requirement for the product. With what we are after it's unlikely a single product can satisfy all requirements, so it's likely there will be trade-offs therefore we have widen the scope to include a variety of data technologies.
 
 |Product|In-Memory|Disk |Sec Index |Columnar|Text Search|Scales|HA|CDCR| Lang.|Release|
 |-------|---------|-----|----------|--------|-----------|------|--|----|------|-------|
@@ -51,24 +51,24 @@ For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text
 
  
 
-|Selection criteria|
-|------------------|
-|infrastructure implications|
-|security (functional authorisation) |
-|security (data role)|
-|functional fit across our repositories to index|
-|performance benchmarks with volumes |
-|performance benchmarks with complex operations|
-|maintainability |
-|supportability|
-|product support|
-|knowledge community|
-|maturity |
-|TCO|
-|deployability in our environment|
-|source support-RDBMS|
-|source support-OID,LDAP|
-|source support-logs|
-|source support-CMS e.g. WCC|
-|source support-files|
-|source support-JMS|
+|Selection criteria|Solr|Elasticsearch|Oracle(Text)|Ignite|
+|------------------|----|-------------|------------|------|
+|infrastructure implications| | | | |
+|security (functional authorisation) | | | | |
+|security (data role)| | | | |
+|functional fit across our repositories to index| | | | |
+|performance benchmarks with volumes | | | | |
+|performance benchmarks with complex operations| | | | |
+|maintainability | | | | |
+|supportability| | | | |
+|product support| | | | |
+|knowledge community| | | | |
+|maturity | | | | |
+|TCO| | | | |
+|deployability in our environment| | | | |
+|source support-RDBMS| | | | |
+|source support-OID,LDAP| | | | |
+|source support-logs| | | | |
+|source support-CMS e.g. WCC| | | | |
+|source support-files| | | | |
+|source support-JMS| | | | |
