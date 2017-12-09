@@ -1,14 +1,14 @@
 # Introduction
 
-This repository describes the search for an ideal fast-search-analytics product which can sit between a traditional RDBMS or hadoop filesystem and application, and provide under 100ms query performance, text search capability, analytics, high availability etc.
+This repository describes the search for an ideal high-performance-search-analytics product which can sit between a traditional RDBMS or hadoop filesystem and application, and provide under 100ms query performance, search capability, large volumes, analytics, high availability etc.
 
 # Proposed architecture
 This picture depicts what architecture/capability we are after:
 
 ![Integral Layer](images/integral.png)
 
-# Product comparisons
-This table shows high level requirement for the product.
+# Product feature comparisons
+This table shows high level requirement for the product. With what we are after it's unlikely a single product can satisfy all requirements, so it's likely there will be trade-offs therefore we have widen the scope to include a variety of technologies.
 
 |Product|In-Memory|Disk |Sec Index |Columnar|Text Search|Scales|HA|CDCR| Lang.|Release|
 |-------|---------|-----|----------|--------|-----------|------|--|----|------|-------|
@@ -48,3 +48,27 @@ For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text
 
 
 # Product recommendation
+
+ 
+
+|Selection criteria|
+|------------------|
+|infrastructure implications|
+|security (functional authorisation) |
+|security (data role)|
+|functional fit across our repositories to index|
+|performance benchmarks with volumes |
+|performance benchmarks with complex operations|
+|maintainability |
+|supportability|
+|product support|
+|knowledge community|
+|maturity |
+|TCO|
+|deployability in our environment|
+|source support-RDBMS|
+|source support-OID,LDAP|
+|source support-logs|
+|source support-CMS e.g. WCC|
+|source support-files|
+|source support-JMS|
