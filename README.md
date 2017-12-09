@@ -12,19 +12,19 @@ This table shows high level requirement for the product.
 
 |Product|In-Memory|Disk |Sec Index |Columnar|Text Search|Scales|HA|CDCR| Lang.|Release|
 |-------|---------|-----|----------|--------|-----------|------|--|----|------|-------|
-|Solr   | ✖ cache | ✔  | ✔       |        | ✔✔✔ Lucene| Hor |✔  |✔  | Java |  |    
-|Elastic| ✖ cache| ✔   | ✔       |        | ✔✔✔ Lucene| Hor |✔  | ✔ | Java |   |  
-|Oracle(Text)| ✖ cache| ✔ | ✔    |        | ✔✔ Inverted| Ver | ✖  |✔  | C  |  |  
-|PostgreSQL| ✖    | ✔ | ✔        |        | ✔        | Hor| ✔ | ✔ | C | 1996 |  
-|MongoDB  | ✔ store|   | ✔        |        | ✔         | Hor | ✔ |  ✔| C++ |2009  |
-|Ignite(GG)| ✔ store | ✔    | ✔  |        | ✔✔ Lucene| Hor | ✔ |✔  |Java | 2007| 
-|EXASOL| ✔ store |            | ✔          | | ✖        | Hor | ✔ | ✔ |  |2000  |  
-|VoltDB| ✔       |            |            | | ✖        | Hor | ✔ | ✔ |Java  |  |  
-|Vertica|✖       | ✔         | ✔         |  | ✖        | Hor | ✔ |✔  |  | 2005 |  
-|MariaDB|✖       | ✔         | ✔          | | ✖        | Hor |✔  |✔  | C | 2009 |  
-|Cassandra|✖     | ✔         | ✖          |  | ✖        | Hor |✔  | ✔ |  Java | 2008 |  
-|Sphinx| ✖ cache | ✔         | ✔          | | ✔✔✔     | Hor | ✔ | ✔ | C++ |2001 |  
-|MemSQL|✔        | ✔         |            | |            | Hor | ✔ | ✔ | C++    | 2013 |
+|Solr   | ✖ cache | ✔  | ✔       |        | ✔✔✔ Lucene| Hor |✔  |✔  | Java | 2004 |    
+|Elastic| ✖ cache| ✔   | ✔       |        | ✔✔✔ Lucene| Hor |✔  | ✔ | Java | 2004 |  
+|Oracle(Text)| ✖ cache| ✔ | ✔    |        | ✔✔ Inverted| Ver| ✖ |✔  | C    |      |  
+|PostgreSQL| ✖    | ✔ | ✔        |        | ✔         | Hor  | ✔ | ✔ | C   | 1996 |  
+|MongoDB  | ✔ store|   | ✔        |        | ✔        | Hor  | ✔ |  ✔| C++  |2009  |
+|Ignite(GG)| ✔ store | ✔ | ✔     |        | ✔✔ Lucene| Hor  | ✔ |✔  |Java  | 2007 | 
+|EXASOL| ✔ store |       | ✔      |        | ✖        | Hor  | ✔ | ✔ |      |2000  |  
+|VoltDB| ✔       |       |        |        | ✖        | Hor  | ✔ | ✔ |Java  |      |  
+|Vertica|✖       | ✔    | ✔      |        | ✖        | Hor  | ✔ |✔  |      | 2005 |  
+|MariaDB|✖       | ✔    | ✔      |        | ✖        | Hor  |✔  |✔  | C    | 2009 |  
+|Cassandra|✖     | ✔    | ✖      |        | ✖        | Hor  |✔  | ✔ | Java | 2008 |  
+|Sphinx| ✖ cache | ✔    | ✔      |        | ✔✔✔     | Hor  | ✔ | ✔ | C++  |2001  |  
+|MemSQL|✔        | ✔    |        |  ✔     |           | Hor  | ✔ | ✔ | C++  | 2013 |
 
 # Product evaluation
 For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text) and Apache Ignite.
