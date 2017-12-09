@@ -49,16 +49,17 @@ For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text
 
 # Product recommendation
 
- 
+The products were tested on a single VM on GCP (4 vCPUs + 15GB RAM) with 27 million records. 
 
 |Selection criteria|Solr|Elasticsearch|Oracle(Text)|Ignite|
 |------------------|----|-------------|------------|------|
-|infrastructure implications| | | | |
+|infrastructure implications|new VMs + SSD|new VMs + SSD |existing DB |new VMs + SSD |
 |security (functional authorisation) | | | | |
 |security (data role)| | | | |
 |functional fit across our repositories to index| | | | |
 |performance benchmarks with volumes | | | | |
 |performance benchmarks with complex operations| | | | |
+|performance benchmarks with ETL|~5000/s, 30 stored + 19 indexed fields| | | |
 |maintainability | | | | |
 |supportability| | | | |
 |product support| | | | |
