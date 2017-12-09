@@ -1,6 +1,6 @@
 # All things Data
 
-This repository describes the search for an ideal fast-search=analytics product which can sit between a traditional RDBMS or hadoop filesystem and application, and provide under 100ms query performance, text search capability, analytics, high availability etc.
+This repository describes the search for an ideal fast-search-analytics product which can sit between a traditional RDBMS or hadoop filesystem and application, and provide under 100ms query performance, text search capability, analytics, high availability etc.
 
 |Product|In-Memory|Persistence|Sec. Indexing|Text Search|Scalable|Availability|DR (CDCR)| Lang.|Release|
 |-------|---------|-----------|-------------|-----------|--------|------------|---------|------|-------|
@@ -14,7 +14,6 @@ This repository describes the search for an ideal fast-search=analytics product 
 |VoltDB| ✔       |            |             | ✖        | Horizontal |  |  |  |  |  
 |Vertica|✖       | ✔         | ✔           | ✖        | Horizontal |  |  |  |  |  
 |MariaDB|✖       | ✔         | ✔           | ✖        | Horizontal |  |  |  |  |  
-|Redisearch|      | ✔         |✔           | ✔✔       | Horizontal  |  |  |  |  | 
 |Cassandra|✖     | ✔         |             | ✖        | Horizontal |  |  |  |  |  
 |Sphinx| ✖ cache | ✔         | ✔           | ✔✔✔     | Horizontal |  |  |  |  |  
 
