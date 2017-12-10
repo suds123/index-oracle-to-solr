@@ -39,7 +39,7 @@ For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text
 ## Solr
   1. [Install SolrCloud](solr/install-solr-cloud/README.md)
  
-  2. [Index RDBMS on Solr](index-oracle-db/README.md)
+  2. [Index RDBMS on Solr](solr/index-oracle-db/README.md)
  
   3. [Solr security](solr/security/README.md)
  
