@@ -1,6 +1,6 @@
 # Solr Security
 
-## Apllication Security
+## Application Security
 Calling application should authenticate using a service account and should have access to indexes and permissions allowed only for that service account.
 
 ## Functional Role Security
