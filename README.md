@@ -8,7 +8,12 @@ This picture depicts where the product would sit within our existing architectur
 ![Integral Layer](images/integral.png)
 
 # Initial selection
-With what we are after it's unlikely a single product can satisfy all requirements, so it's likely there will be trade-offs therefore we have widen the scope to include a variety of data technologies. The criteria for initial selection was product literature, white-papers, product specifications, and external agency ranking (Forrester and DB-Engines). This table shows high level requirement-features and if the product meets it.
+With what we are after it's unlikely a single product can satisfy all requirements, so it's likely there will be trade-offs therefore we have widen the scope to include a variety of data technologies. Though I must mention with plethora of products available (see below) doing an initial selection was not easy.
+
+![Data Platforms](images/DataPlatforms.png)
+
+
+The criteria for initial selection was product literature, white-papers, product specifications, and external agency ranking (Forrester and DB-Engines). This table shows high level requirement-features and if the product meets it.
 
 
 |Product|In-Memory|Disk |Sec Index |Columnar|Text Search|Scales|HA|XDCR| Lang.|Release|
