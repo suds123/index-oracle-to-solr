@@ -7,9 +7,8 @@ This picture depicts where the product would sit within our existing architectur
 
 ![Integral Layer](images/integral.png)
 
-# Product feature comparisons
-This table shows high level requirement for the product. 
-With what we are after it's unlikely a single product can satisfy all requirements, so it's likely there will be trade-offs therefore we have widen the scope to include a variety of data technologies.
+# Initial selection
+With what we are after it's unlikely a single product can satisfy all requirements, so it's likely there will be trade-offs therefore we have widen the scope to include a variety of data technologies. The criteria for initial selection was product literature, white-papers, product specifications, and external agency ranking (Forrester and DB-Engines). This table shows high level requirement-features and if the product meets it.
 
 
 |Product|In-Memory|Disk |Sec Index |Columnar|Text Search|Scales|HA|XDCR| Lang.|Release|
@@ -29,8 +28,8 @@ With what we are after it's unlikely a single product can satisfy all requiremen
 |MemSQL|✔        | ✔    |        |  ✔     |           | Hor  | ✔ | ✔ | C++  | 2013 |
 |Couchbase|✔     | ✔    | ✔      |        | ✔✔       | Hor  | ✔ | ✔ | C++  | 2010 |
 
-# Product evaluation
-For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text) and Apache Ignite.
+# Product selection and evaluation
+For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text) and Apache Ignite. The selected products were tested on a single VM on GCP (4 vCPUs + 15GB RAM) with 27 million records. 
 
 ## Solr
   1. [Install SolrCloud](solr/install-solr-cloud/README.md)
@@ -76,29 +75,30 @@ For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text
   
   5. [Ignite commands reference]  <!--(ignite/commands/README.md)-->
 
+# Decision analysis 
+
+
+|Selection criteria|Weightage|Solr|Elasticsearch|Oracle(Text)|Ignite|
+|------------------|---------|----|-------------|------------|------|
+|Infrastructure implications||new VMs + SSD|new VMs + SSD |existing DB |new VMs + SSD |
+|security (functional) || | | | |
+|security (data)|| Query filter | Query filter| Query filter | Query filter |
+|functional fit across our repositories to index|| | | | |
+|performance of queries ||| | | |
+|performance of complex queries|| | | | |
+|performance of load||~5000/s, 30 stored + 19 indexed fields| | | |
+|maintainability || | | | |
+|supportability|| | | | |
+|product support|| ✔ (Lucid) | ✔ | ✔ | ✔ (GG)|
+|knowledge community|| | | | |
+|maturity || ✔ | ✔ | ✔ | ✔ (GG)|
+|TCO|| | |  | |
+|deployability in our environment|| ✔ | ✔ | ✔✔ | ✔ |
+|source support-RDBMS|| ✔ | ✔ | ✔ | ✔ |
+|source support-OID,LDAP|| | | | |
+|source support-logs|| ✔ | ✔ |SQL\*Loader | |
+|source support-CMS|| | | | |
+|source support-files|| ✔ | ✔ | ✔ | ✔ |
+|source support-JMS|| | | | |
+
 # Product recommendation
-
-The products were tested on a single VM on GCP (4 vCPUs + 15GB RAM) with 27 million records. 
-
-|Selection criteria|Solr|Elasticsearch|Oracle(Text)|Ignite|
-|------------------|----|-------------|------------|------|
-|Infrastructure implications|new VMs + SSD|new VMs + SSD |existing DB |new VMs + SSD |
-|security (functional) | | | | |
-|security (data)| Query filter | Query filter| Query filter | Query filter |
-|functional fit across our repositories to index| | | | |
-|performance of queries | | | | |
-|performance of complex queries| | | | |
-|performance of load|~5000/s, 30 stored + 19 indexed fields| | | |
-|maintainability | | | | |
-|supportability| | | | |
-|product support| ✔ (Lucid) | ✔ | ✔ | ✔ (GG)|
-|knowledge community| | | | |
-|maturity | ✔ | ✔ | ✔ | ✔ (GG)|
-|TCO| | |  | |
-|deployability in our environment| ✔ | ✔ | ✔✔ | ✔ |
-|source support-RDBMS| ✔ | ✔ | ✔ | ✔ |
-|source support-OID,LDAP| | | | |
-|source support-logs| ✔ | ✔ |SQL\*Loader | |
-|source support-CMS| | | | |
-|source support-files| ✔ | ✔ | ✔ | ✔ |
-|source support-JMS| | | | |
