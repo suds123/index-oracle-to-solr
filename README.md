@@ -12,21 +12,22 @@ This table shows high level requirement for the product.
 With what we are after it's unlikely a single product can satisfy all requirements, so it's likely there will be trade-offs therefore we have widen the scope to include a variety of data technologies.
 
 
-|Product|In-Memory|Disk |Sec Index |Columnar|Text Search|Scales|HA|CDCR| Lang.|Release|
+|Product|In-Memory|Disk |Sec Index |Columnar|Text Search|Scales|HA|XDCR| Lang.|Release|
 |-------|---------|-----|----------|--------|-----------|------|--|----|------|-------|
 |Solr   | ✖ cache | ✔  | ✔       |        | ✔✔✔ Lucene| Hor |✔  |✔  | Java | 2004 |    
 |Elastic| ✖ cache| ✔   | ✔       |        | ✔✔✔ Lucene| Hor |✔  | ✔ | Java | 2004 |  
-|Oracle(Text)| ✖ cache| ✔ | ✔    |        | ✔✔ Inverted| Ver| ✖ |✔  | C    |      |  
+|Oracle(Text)| ✖ cache| ✔ | ✔    |        | ✔✔ Inverted| Ver| ✖ |✔  | C    | 1997 |  
 |PostgreSQL| ✖    | ✔ | ✔        |        | ✔         | Hor  | ✔ | ✔ | C   | 1996 |  
 |MongoDB  | ✔ store|   | ✔        |        | ✔        | Hor  | ✔ |  ✔| C++  |2009  |
 |Ignite(GG)| ✔ store | ✔ | ✔     |        | ✔✔ Lucene| Hor  | ✔ |✔  |Java  | 2007 | 
-|EXASOL| ✔ store |       | ✔      |        | ✖        | Hor  | ✔ | ✔ |      |2000  |  
+|EXASOL| ✔ store |       | ✔      |  ✔    | ✖        | Hor  | ✔ | ✔ |      |2000  |  
 |VoltDB| ✔       |       |        |        | ✖        | Hor  | ✔ | ✔ |Java  |      |  
-|Vertica|✖       | ✔    | ✔      |        | ✖        | Hor  | ✔ |✔  |      | 2005 |  
+|Vertica|✖       | ✔    | ✔      |  ✔     | ✖        | Hor  | ✔ |✔  |      | 2005 |  
 |MariaDB|✖       | ✔    | ✔      |        | ✖        | Hor  |✔  |✔  | C    | 2009 |  
 |Cassandra|✖     | ✔    | ✖      |        | ✖        | Hor  |✔  | ✔ | Java | 2008 |  
 |Sphinx| ✖ cache | ✔    | ✔      |        | ✔✔✔     | Hor  | ✔ | ✔ | C++  |2001  |  
 |MemSQL|✔        | ✔    |        |  ✔     |           | Hor  | ✔ | ✔ | C++  | 2013 |
+|Couchbase|✔     | ✔    | ✔      |        | ✔✔       | Hor  | ✔ | ✔ | C++  | 2010 |
 
 # Product evaluation
 For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text) and Apache Ignite.
@@ -83,21 +84,21 @@ The products were tested on a single VM on GCP (4 vCPUs + 15GB RAM) with 27 mill
 |------------------|----|-------------|------------|------|
 |Infrastructure implications|new VMs + SSD|new VMs + SSD |existing DB |new VMs + SSD |
 |security (functional) | | | | |
-|security (data)| | | | |
+|security (data)| Query filter | Query filter| Query filter | Query filter |
 |functional fit across our repositories to index| | | | |
 |performance of queries | | | | |
 |performance of complex queries| | | | |
 |performance of load|~5000/s, 30 stored + 19 indexed fields| | | |
 |maintainability | | | | |
 |supportability| | | | |
-|product support| | | | |
+|product support| ✔ (Lucid) | ✔ | ✔ | ✔ (GG)|
 |knowledge community| | | | |
-|maturity | | | | |
-|TCO| | | | |
-|deployability in our environment| | | | |
-|source support-RDBMS| | | | |
+|maturity | ✔ | ✔ | ✔ | ✔ (GG)|
+|TCO| | |  | |
+|deployability in our environment| ✔ | ✔ | ✔✔ | ✔ |
+|source support-RDBMS| ✔ | ✔ | ✔ | ✔ |
 |source support-OID,LDAP| | | | |
-|source support-logs| | | | |
+|source support-logs| ✔ | ✔ |SQL\*Loader | |
 |source support-CMS| | | | |
-|source support-files| | | | |
+|source support-files| ✔ | ✔ | ✔ | ✔ |
 |source support-JMS| | | | |
