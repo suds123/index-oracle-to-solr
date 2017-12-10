@@ -93,6 +93,7 @@ For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text
 |functional fit across our repositories to index|| | | | |
 |performance of queries ||| | | |
 |performance of complex queries|| | | | |
+|pagination support||✔|✔ |✖ |✖ |
 |performance of load||~5000/s, 30 stored + 19 indexed fields| | | |
 |maintainability || | | | |
 |supportability|| | | | |
