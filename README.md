@@ -33,7 +33,7 @@ The criteria for initial selection was product literature, white-papers, product
 |MemSQL|✔        | ✔    |        |  ✔     |           | Hor  | ✔ | ✔ | C++  | 2013 |
 |Couchbase|✔     | ✔    | ✔      |        | ✔✔       | Hor  | ✔ | ✔ | C++  | 2010 |
 
-# Product selection for evaluation
+# Product selection and evaluation
 For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text) and Apache Ignite. The selected products were tested on a single VM on GCP (4 vCPUs + 15GB RAM) with 27 million records. 
 
 ## Solr
