@@ -22,7 +22,7 @@ The criteria for initial selection was product literature, white-papers, product
 |Elastic| ✖ cache| ✔   | ✔       |        | ✔✔✔ Lucene| Hor |✔  | ✔ | Java | 2004 |  
 |Oracle(Text)| ✖ cache| ✔ | ✔    |        | ✔✔ Inverted| Ver| ✖ |✔  | C    | 1997 |  
 |PostgreSQL| ✖    | ✔ | ✔        |        | ✔         | Hor  | ✔ | ✔ | C   | 1996 |  
-|MongoDB  | ✔ store|   | ✔        |        | ✔        | Hor  | ✔ |  ✔| C++  |2009  |
+|MongoDB  | ✔ store| ✔  | ✔      |        | ✔        | Hor  | ✔ |  ✔| C++  |2009  |
 |Ignite(GG)| ✔ store | ✔ | ✔     |        | ✔✔ Lucene| Hor  | ✔ |✔  |Java  | 2007 | 
 |EXASOL| ✔ store |       | ✔      |  ✔    | ✖        | Hor  | ✔ | ✔ |      |2000  |  
 |VoltDB| ✔       | ✔    | ✔      |  ✖     | ✖        | Hor  | ✔ | ✔ |Java  | 2010 |  
