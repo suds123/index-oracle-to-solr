@@ -81,8 +81,10 @@ For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text
 |Selection criteria|Weightage|Solr|Elasticsearch|Oracle(Text)|Ignite|
 |------------------|---------|----|-------------|------------|------|
 |Infrastructure implications||new VMs + SSD|new VMs + SSD |existing DB |new VMs + SSD |
-|security (functional) || | | | |
-|security (data)|| Query filter | Query filter| Query filter | Query filter |
+|security (functional role) || | | | |
+|security (data role)|| Query filter | Query filter| Query filter | Query filter |
+|Encryption (at rest) || | | | |
+|Encryption (in motion) || | | | |
 |functional fit across our repositories to index|| | | | |
 |performance of queries ||| | | |
 |performance of complex queries|| | | | |
