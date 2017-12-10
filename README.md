@@ -1,6 +1,6 @@
 # Introduction
 
-This repository describes the search for an ideal high-performance-search-analytics product which can sit between a traditional RDBMS or hadoop filesystem and application, and provide under 100ms query performance, search capability, handle large volumes, analytics, high availability etc.
+This repository describes the search for a high-performance-search-analytics product which can sit between a traditional RDBMS or hadoop filesystem and application, and provide under 100ms query performance, search capability, handle large volumes, analytics, high availability etc.
 
 # Proposed architecture
 This picture depicts where the product would sit within our existing architecture and interactions with other components:
