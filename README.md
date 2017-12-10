@@ -25,7 +25,7 @@ The criteria for initial selection was product literature, white-papers, product
 |MongoDB  | ✔ store|   | ✔        |        | ✔        | Hor  | ✔ |  ✔| C++  |2009  |
 |Ignite(GG)| ✔ store | ✔ | ✔     |        | ✔✔ Lucene| Hor  | ✔ |✔  |Java  | 2007 | 
 |EXASOL| ✔ store |       | ✔      |  ✔    | ✖        | Hor  | ✔ | ✔ |      |2000  |  
-|VoltDB| ✔       |       |        |        | ✖        | Hor  | ✔ | ✔ |Java  |      |  
+|VoltDB| ✔       | ✔    | ✔      |  ✖     | ✖        | Hor  | ✔ | ✔ |Java  | 2010 |  
 |Vertica|✖       | ✔    | ✔      |  ✔     | ✖        | Hor  | ✔ |✔  |      | 2005 |  
 |MariaDB|✖       | ✔    | ✔      |        | ✖        | Hor  |✔  |✔  | C    | 2009 |  
 |Cassandra|✖     | ✔    | ✖      |        | ✖        | Hor  |✔  | ✔ | Java | 2008 |  
