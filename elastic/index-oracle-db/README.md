@@ -2,6 +2,7 @@
 # Configure Logstash
   - cd /etc/logstash/conf.d
   - vi trx.conf
+  ```
       input{
                  jdbc{
                                 jdbc_connection_string => "jdbc:oracle:thin:@host:1521:XE"
@@ -19,3 +20,4 @@
                                 "document_type" => "data"
                 }
       }
+```
