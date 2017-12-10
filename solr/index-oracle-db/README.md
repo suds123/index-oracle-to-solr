@@ -146,7 +146,7 @@ Open in browser - http://localhost:8983/solr/#/corp-transactions/dataimport.
 
 You would see the configured data import handler here, if all went well.
 
-![Data Import Handler](images/data-import-handler.png)
+![Data Import Handler](../images/data-import-handler.png)
 
 ## 3.2 Add fields to index
 We are using managed-schema, therefore to add fields we will use solr provided API to add fields used in the document indexed in Solr from data imported from Oracle Database.
@@ -195,7 +195,7 @@ Select the data import handler, command as "full-import" and click on "Execute".
 
 Import status after completion -
 
-![Import Status](images/import-status.png)
+![Import Status](../images/import-status.png)
 
 Size of index -
 * shard-1 - Num Docs:9017585, Size - 1.53 GB
