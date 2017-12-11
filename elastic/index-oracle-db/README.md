@@ -21,3 +21,7 @@
                 }
       }
 ```
+
+# Run logstash
+  - cd /usr/share/logstash
+  - bin/logstash -f /etc/logstash/conf.d/trx.conf
