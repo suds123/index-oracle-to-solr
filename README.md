@@ -13,7 +13,7 @@ With what we are after it's unlikely a single product can satisfy all requiremen
 ![Data Platforms](images/DataPlatforms.png)
 
 
-The criteria for initial selection was product literature, white-papers, product specifications, and external agency ranking (Forrester and DB-Engines). This table shows high level requirement-features and if the product meets it.
+Initial selection was based on product literature, white-papers, product specifications, and external agency ranking (Forrester and DB-Engines). This table shows high level requirement-features and if the product meets it.
 
 
 |Product|In-Memory|Disk |Sec Index |Columnar|Text Search|Scales|HA|XDCR| Lang.|Release|
