@@ -24,4 +24,4 @@
 
 # Run logstash
   - cd /usr/share/logstash
-  - bin/logstash -f /etc/logstash/conf.d/trx.conf
+  - bin/logstash -f /etc/logstash/conf.d/trx.conf -w 4 -b 250
