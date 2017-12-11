@@ -42,6 +42,7 @@
   - pagination - {"start":1000, "rows":100}
 
 ## Conclusion
-  - no. of terms in a filter query is a major factor
-  - sorting doesn't seem to have any affect (more tests required)
+  - no. of terms in a filter query is a factor
   - no. of rows paginated is a minor factor as expected
+  - sorting doesn't seem to have any affect (more tests required)
+  
