@@ -32,9 +32,4 @@ OpenSSL 1.0.2m
   - wget http://download.oracle.com/otn/utilities_drivers/jdbc/11204/ojdbc6.jar
   - sudo mv ojdbc6.jar /usr/lib/
 
-# Install kibana
-  - sudo apt-get update && sudo apt-get install kibana
-  
-## Start-stop kibana  
-  - sudo systemctl start kibana.service
-  - sudo systemctl stop kibana.service
+
