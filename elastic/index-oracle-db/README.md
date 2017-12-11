@@ -25,3 +25,11 @@
 # Run logstash
   - cd /usr/share/logstash
   - bin/logstash -f /etc/logstash/conf.d/trx.conf -w 4 -b 250
+
+
+# Query
+```
+curl -XGET 'localhost:9200/corp-transactions/_search?pretty' -H 'Content-Type: application/json' -d'
+{ "query" : { "bool": { "filter" : [ { "range": {"transaction_date" : {"from":"2016-01-01T00:00:00", "to":"2017-12-31T00:00:00"}}},{"term": { "group.keyword": "419194" }}, { "terms": { "outlet_id.keyword": ["45623133","45700493","45692263","45692763","45497633","45622743","45693493","45623133","45692263","45622743","10348833","36893313","66961433","00674985","77355914","36016999","64306926","46245277","27578361","09042215","61678619","66472571","20055895","99437999","50311108","68518855","29633355","35911472","94956196","98096335","22861216","09512581","28591395","03543491"]}} ]}}, "sort" : [ { "transaction_date" : "asc"} ],"from" : "1000", "size" : "100"}
+' > q1.results
+```
