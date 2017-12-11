@@ -94,7 +94,7 @@ For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text
 |performance of queries | |2128 ms| 600 ms| | |
 |performance of complex queries|| | | | |
 |pagination support||✔|✔ |✖ |✖ |
-|performance of load||~5000/s, 30 stored + 19 indexed fields|~4000/s | | |
+|performance of load||~5000/s, 30 stored + 19 indexed fields|~4000/s (all fields analysed) | | |
 |maintainability || | | | |
 |supportability|| | | | |
 |product support|| ✔ (Lucid) | ✔ | ✔ | ✔ (GG)|
