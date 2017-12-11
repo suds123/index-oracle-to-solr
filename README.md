@@ -52,11 +52,11 @@ For the purpose of evaluation we have selected Solr, Elasticsearch, Oracle (Text
  
   2. [Index RDBMS on Elastic](elastic/index-oracle-db/README.md)
  
-  3. [Elastic security]  <!--(elastic/security/README.md)-->
+  3. [Elastic security](elastic/security/README.md)
  
-  4. [Elastic performance]  <!--(elastic/performance/README.md)-->
+  4. [Elastic performance](elastic/performance/README.md)
   
-  5. [Elastic commands reference]  <!--(elastic/commands/README.md)-->
+  5. [Elastic commands reference](elastic/commands/README.md)
 
 ## Oracle (Text)
   1. [Configure Oracle Text]  <!--(oracle-text/configure-text/README.md)-->
