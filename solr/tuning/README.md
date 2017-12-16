@@ -106,7 +106,3 @@
      - heavy use of dynamic fields
 
 
-
-
-
-
