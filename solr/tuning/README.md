@@ -1,4 +1,8 @@
 
+# Solr Tips
+1. One of the first recommendations is to separate the indexing and searching process to (at least) two separate nodes. There are several benefits to be gained by doing this. First, the indexing and searching processes are not competing for resources (cpu, memory, etc.). Second, nodes can be configured slightly differently for optimum performance. Be sure to budget for adequate hardware based on your document count, index size, and expected query volume.
+
+
 # Solr Sizing
 1. Load sample data. 
    - "numDocs":27046444
