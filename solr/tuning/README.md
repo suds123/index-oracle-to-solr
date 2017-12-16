@@ -7,8 +7,11 @@
    - "Per 1b docs" -> 165.27 GB
 3. Assume 1GB of memory for the OS and 14 GB of memory for the JVM heap, or an overhead of 15GB. 
 4. Sizing Equation -> ((Nodes * Memory Per Node) - (15GB * Nodes)) / (1b Index Size * #billion docs)
-   - ((5*512 GB) - (15GB * 5)) / (165.27 * 100) => 1205/165.27 => ~1.5
    - If the value is less than 1 then you can expect problems. You won’t have enough memory to cache the index, let alone cache the rows. Every query will hit the disk multiple times
+5. For large volumes (upto 100b)
+   - ((10*512 GB) - (15GB * 5)) / (165.27 * 100) => ~0.30
+6. For small volumes (upto 5b)
+   - ((5*256 GB) - (15GB * 5)) / (165.27 * 5) => ~1.2   
 
 # Tuning
 
