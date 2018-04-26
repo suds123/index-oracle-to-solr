@@ -1,0 +1,534 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Reconciliation &mdash; Data Engineering</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Data Pipelines" href="data-pipelines.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Data Engineering Handbook 0.1
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="principles.html">Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search-analytics.html">Search and Insights</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-pipelines.html">Data Pipelines</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Reconciliation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#principles">Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#master-data-reconciliation">Master Data Reconciliation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reference-data-reconciliation">Reference Data Reconciliation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#transaction-data-reconciliation">Transaction Data Reconciliation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#source-data-transfer-metadata">Source data transfer metadata</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-transfer-through-tables">Data transfer through tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-transfer-through-files">Data transfer through files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#streaming-data-transfer">Streaming Data transfer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#reconciliation-framework">Reconciliation Framework</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+    <br/>
+    <br/>
+    <a href=""><img src="_images/GitHub-Mark-Light-32px.png">&nbsp;Go to Github</a>
+  
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Data Engineering Handbook 0.1</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Reconciliation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="reconciliation">
+<h1>Reconciliation<a class="headerlink" href="#reconciliation" title="Permalink to this headline">¶</a></h1>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<dl class="last docutils">
+<dt>Reconciliation increases the integrity levels of information stored within the data store/warehouse.</dt>
+<dd>What you will find here are data reconciliation techniques and framework.</dd>
+</dl>
+</div>
+<div class="section" id="principles">
+<h2>Principles<a class="headerlink" href="#principles" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Reconcile and validate information before it enters the data warehouse</li>
+<li>Validate information before, during, and after Extract, Transform, and Load (ETL) processes</li>
+<li>Verify and reconcile information already in your data warehouse against source systems</li>
+<li>Ensure that information is not lost or erroneously duplicated</li>
+<li>Reconcile report contents against the warehouse</li>
+<li>Perform reasonableness tests to detect potential problems</li>
+<li>Compute statistical tests to feed other controls or determine if expected thresholds are exceeded</li>
+</ul>
+</div>
+<div class="section" id="master-data-reconciliation">
+<h2>Master Data Reconciliation<a class="headerlink" href="#master-data-reconciliation" title="Permalink to this headline">¶</a></h2>
+<p>Reconcile the number of merchants in full load.</p>
+<ul class="simple">
+<li>Source - Number of NAP Merchants - Active, Closed, Suspended</li>
+<li>Target - Number of NAP Digital onboarded + non-onboarded - Active, Closed, Suspended</li>
+<li>Source - Number of PAP Merchants -  Active, Closed, Suspended</li>
+<li>Target - Number of PAP Digital onboarded + non-onboarded - Active, Closed, Suspended</li>
+</ul>
+</div>
+<div class="section" id="reference-data-reconciliation">
+<h2>Reference Data Reconciliation<a class="headerlink" href="#reference-data-reconciliation" title="Permalink to this headline">¶</a></h2>
+<p>Reconcile Currency, MCC, Card Product Type, etc.</p>
+</div>
+<div class="section" id="transaction-data-reconciliation">
+<h2>Transaction Data Reconciliation<a class="headerlink" href="#transaction-data-reconciliation" title="Permalink to this headline">¶</a></h2>
+<p>Reconcile count, balances e.g. sum, etc. from staging till the target layer and capture all business failures, exclusions count.</p>
+</div>
+<div class="section" id="source-data-transfer-metadata">
+<h2>Source data transfer metadata<a class="headerlink" href="#source-data-transfer-metadata" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="data-transfer-through-tables">
+<h3>Data transfer through tables<a class="headerlink" href="#data-transfer-through-tables" title="Permalink to this headline">¶</a></h3>
+<p>For data transfer through tables, use the below structure:</p>
+<table border="1" class="colwidths-auto docutils" id="id1">
+<caption><span class="caption-text">Table ETL_OWNER.ETL_SOURCE_CONTROL</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">SOURCE_SYSTEM</th>
+<th class="head">INTERFACE_NAME</th>
+<th class="head">TABLE_FILE_NAME</th>
+<th class="head">ETL_BATCH_ID</th>
+<th class="head">ROW_COUNT</th>
+<th class="head">BALANCE_SUM</th>
+<th class="head">BALANCE_COLUMN</th>
+<th class="head">CREATED_DATE</th>
+<th class="head">CREATED_BY</th>
+<th class="head">LAST_UPDATED_DATE</th>
+<th class="head">LAST_UPDATED_BY</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>NAP</td>
+<td>IF403</td>
+<td>STG_CQPR</td>
+<td>10001</td>
+<td>1996500</td>
+<td>672945600</td>
+<td>PAYER_AMOUNT</td>
+<td>SYSDATE</td>
+<td>ODI-&lt;session-id&gt;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>NAP</td>
+<td>IF402</td>
+<td>STG_MERCHANT_DETAILS</td>
+<td>1021</td>
+<td>8500</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>SYSDATE</td>
+<td>ODI-&lt;session-id&gt;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<p>The control record is to be inserted post successful data transfer to the staging table e.g. once data is transferred and committed to STG_CQPR, then
+a record is inserted as shown above into the ETL_SOURCE_CONTROL table. This signifies that the transfer was successful and provides the counts and balances for reconciliation.
+The context should exactly match as the staging table populated i.e. SOURCE_SYSTEM, INTERFACE_NAME, TABLE_FILE_NAME, and ETL_BATCH_ID should provide the
+necessary context to tie the control record to the staging table.</p>
+<p>Fields Description:</p>
+<ul class="simple">
+<li>SOURCE_SYSTEM - NAP, PAP, etc.</li>
+<li>INTERFACE_NAME - IF402, IF403, IF414, IF408, etc.</li>
+<li>TABLE_FILE_NAME - Staging table names or file names e.g. STG_CQPR</li>
+<li>ETL_BATCH_ID - same as the one inserted into the staging table for this particular transfer</li>
+<li>ROW_COUNT - count of records in the staging table or file</li>
+<li>BALANCE_COLUMN - the field used for balances e.g. PAYER_AMOUNT</li>
+<li>BALANCE_SUM - the balance amount, usually the aggregate function should be SUM in all cases</li>
+<li>CREATED_DATE - (audit column) date of creation of this control record</li>
+<li>CREATED_BY - (audit column) process/session-id etc. of the process which inserted this control record</li>
+<li>LAST_UPDATED_DATE - (audit column) left blank as we don’t expect this table to be updated</li>
+<li>LAST_UPDATED_BY - (audit column) left blank as we don’t expect this table to be updated</li>
+</ul>
+</div>
+<div class="section" id="data-transfer-through-files">
+<h3>Data transfer through files<a class="headerlink" href="#data-transfer-through-files" title="Permalink to this headline">¶</a></h3>
+<p>For data transfer through files, the source should ideally provide a compressed data file and a control file post-completion of the transfer process.
+This process is called “Token aware” - Tokens are files created in the file system to trigger an ETL event. Applications that are token aware can poll a directory for the arrival of a token file.
+The control file holds metadata information about the file transfers. The control file should have an “.info” extension.
+There are variety of ways the data file and control file could be related - like one data file and one control file, multi data files and one control file, or multi data files and multi control files.</p>
+<p>Take the example of simplest scenario - one compressed data file and one control file. The name of control file should be &lt;data file name&gt;.info.</p>
+<p>The structure of control file is comma-delimited:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cat test_20180425105233.info
+
+&quot;FILE_NAME&quot;,&quot;FILE_COUNT&quot;,&quot;FILE_SIZE&quot;,&quot;CHECKSUM&quot;,&quot;CHECKSUM_TYPE&quot;
+&quot;test_20180425105233.gz&quot;,&quot;20000&quot;,&quot;43856377&quot;,&quot;1446861148&quot;,&quot;CKSUM&quot;
+</pre></div>
+</div>
+<p>The above control file shows that “test_20180425105233.gz” contains 20,000 files, the file size of “test_20180425105233.gz” is 43856377 bytes and CKSUM checksum is 1446861148.
+CKSUM_TYPE could be MD5 or simple UNIX cksum.</p>
+<p>The data file names should be unique, both the compressed file and it’s content files should be unique. This is to prevent duplicates.
+Duplicate files are a common occurrence when files are being received daily/weekly/monthly from another application.
+Sometimes, the previous day’s file has been sent in error. Prior to processing the file, business rules can be executed to ensure the
+correct day’s file will be processed, or in the case of an incorrect file being received, an exception report will be immediately flagged and
+the process will prevent the incorrect file from processing.</p>
+<p>On the target side, the control-file should be loaded into the “REC_OWNER.ETL_SOURCE_CONTROL” table:</p>
+<table border="1" class="colwidths-auto docutils" id="id2">
+<caption><span class="caption-text">Table ETL_OWNER.ETL_SOURCE_CONTROL</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">SOURCE_SYSTEM</th>
+<th class="head">INTERFACE_NAME</th>
+<th class="head">TABLE_FILE_NAME</th>
+<th class="head">ETL_BATCH_ID</th>
+<th class="head">ROW_COUNT</th>
+<th class="head">SUM_AMOUNT</th>
+<th class="head">CREATED_DATE</th>
+<th class="head">CREATED_BY</th>
+<th class="head">LAST_UPDATED_DATE</th>
+<th class="head">LAST_UPDATED_BY</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>NAP</td>
+<td>IF414</td>
+<td>test_20180425105233.gz</td>
+<td>105</td>
+<td>20000</td>
+<td>&#160;</td>
+<td>SYSDATE</td>
+<td>ETL Process ID</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="streaming-data-transfer">
+<h3>Streaming Data transfer<a class="headerlink" href="#streaming-data-transfer" title="Permalink to this headline">¶</a></h3>
+<p>Kafka Topics, JMS etc.</p>
+</div>
+</div>
+<div class="section" id="reconciliation-framework">
+<h2>Reconciliation Framework<a class="headerlink" href="#reconciliation-framework" title="Permalink to this headline">¶</a></h2>
+<p>Combination of ETL tools capabilities and scripting techniques to get counts and balances at the source level when the application
+is providing the data extract. ETL tools are used to read the feed information and
+track them by updating and loading metadata tables into data warehouse. At the end of the process, reconciliation reports are generated
+to ensure transparency around the data ingestion process in addition to transformations that occur during the data movement.</p>
+<p><strong>Counts and Balances</strong> - An example of the value of balancing information is when a program is used to extract data from a source system as input into a target system.
+Business rules are used to balance information such as record counts and sum of amounts on the source file and match the record counts and sum of amounts extracted for input into the target system.</p>
+<table border="1" class="colwidths-auto docutils" id="id3">
+<caption><span class="caption-text">Table ETL_OWNER.RECON_CONTROL</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">RECON_ID</th>
+<th class="head">RECON_FROM</th>
+<th class="head">RECON_TO</th>
+<th class="head">SOURCE_ID</th>
+<th class="head">TARGET_ID</th>
+<th class="head">SOURCE_COUNT</th>
+<th class="head">TARGET_COUNT</th>
+<th class="head">CREATED_DATE</th>
+<th class="head">CREATED_BY</th>
+<th class="head">LAST_UPDATED_DATE</th>
+<th class="head">LAST_UPDATED_BY</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1001</td>
+<td>STG_CQPR</td>
+<td>FINANCIAL_TRANS_EVENT</td>
+<td>ETL_BATCH_ID/FILE_NAME</td>
+<td>PROCESS_ID</td>
+<td>1000</td>
+<td>700</td>
+<td>SYSDATE</td>
+<td>PROCESS_ID</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="colwidths-auto docutils" id="id4">
+<caption><span class="caption-text">Table ETL_OWNER.RECON_CONTROL_DETAILS</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">RECON_ID</th>
+<th class="head">RECON_TYPE</th>
+<th class="head">CATEGORY</th>
+<th class="head">KEY</th>
+<th class="head">VALUE</th>
+<th class="head">CREATED_DATE</th>
+<th class="head">CREATED_BY</th>
+<th class="head">LAST_UPDATED_DATE</th>
+<th class="head">LAST_UPDATED_BY</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1001</td>
+<td>COUNT</td>
+<td>EXCLUSION</td>
+<td>REPRESENTMENT</td>
+<td>54</td>
+<td>SYSDATE</td>
+<td>PROCESS_ID</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>1001</td>
+<td>COUNT</td>
+<td>EXCLUSION</td>
+<td>NON-ONBOARDED</td>
+<td>176</td>
+<td>SYSDATE</td>
+<td>PROCESS_ID</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>1001</td>
+<td>COUNT</td>
+<td>EXCLUSION</td>
+<td>CORRECTS</td>
+<td>32</td>
+<td>SYSDATE</td>
+<td>PROCESS_ID</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>1001</td>
+<td>COUNT</td>
+<td>BUSINESS-FAILURE</td>
+<td>PAN-BLANK</td>
+<td>54</td>
+<td>SYSDATE</td>
+<td>PROCESS_ID</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>1001</td>
+<td>COUNT</td>
+<td>BUSINESS-FAILURE</td>
+<td>CURRENCY-BLANK</td>
+<td>54</td>
+<td>SYSDATE</td>
+<td>PROCESS_ID</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="colwidths-auto docutils" id="id5">
+<caption><span class="caption-text">Table ETL_OWNER.RECON_CONTROL_MASTER</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">RECON_KEY</th>
+<th class="head">DESCRIPTION</th>
+<th class="head">CREATED_DATE</th>
+<th class="head">CREATED_BY</th>
+<th class="head">LAST_UPDATED_DATE</th>
+<th class="head">LAST_UPDATED_BY</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>REPRESENTMENT</td>
+<td>Representments</td>
+<td>SYSDATE</td>
+<td>PROCESS_ID</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>NON-ONBOARDED</td>
+<td>Merchants not onboarded to Digital</td>
+<td>SYSDATE</td>
+<td>PROCESS_ID</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="data-pipelines.html" class="btn btn-neutral" title="Data Pipelines" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>
