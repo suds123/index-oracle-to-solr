@@ -1,0 +1,628 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Elasticsearch &mdash; Data Architecture</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Confluent 4.1" href="confluent.html" />
+    <link rel="prev" title="MemSQL" href="memsql.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> High Performance Data Architecture 0.1
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmarking Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memsql.html">MemSQL</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Elasticsearch</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#use-cases">Use Cases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#proposed-architecture">Proposed architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#initial-selection">Initial selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#product-selection-and-evaluation">Product selection and evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-role-filter">Data role filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#decision-analysis">Decision analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#review-and-recommendation">Review and recommendation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sorting">Sorting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#coherence-imdg">Coherence IMDG</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Oracle 12c In-Memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">MemSQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Elasticsearch</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#performance-test-results">Performance test results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#full-test-results">Full test results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sme-test-results-users-with-1-10-outlets-access">SME test results (users with 1-10 outlets access)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#corp-test-results-users-with-50-5k-outlets-access">CORP test results (users with 50-5k outlets access)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#external-benchmarking">External Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#proposed-architecture-diagram">Proposed Architecture Diagram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="confluent.html">Confluent 4.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bigquery.html">BigQuery</a></li>
+</ul>
+
+            
+          
+    <br/>
+    <br/>
+    <a href=""><img src="_images/GitHub-Mark-Light-32px.png">&nbsp;Go to Github</a>
+  
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">High Performance Data Architecture 0.1</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Elasticsearch</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="elasticsearch">
+<h1>Elasticsearch<a class="headerlink" href="#elasticsearch" title="Permalink to this headline">¶</a></h1>
+<p>This section describes the search for a high performance search analytics product which can sit between a foundation layer (RDBMS,  filesystem) and application, and provide fast query performance, search capability, handle large volumes, fast ingestion, analytics, high availability etc.</p>
+<div class="section" id="use-cases">
+<h2>Use Cases<a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first"><strong>MBD - DSPMBD-5030</strong>
+* <strong>Three year projected merchant increase for transaction search performance</strong> -</p>
+<blockquote>
+<div><p>Given a small merchant with 6,350 transactions processed over the last 365 days
+And a historic set of data existing to support up to 350k merchants
+When the merchant performs a transaction search for all their transactions over the course of a year
+Then the search returns the results in an average response of 3 seconds and 90% response of 5 seconds.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>YMP - DSPYMP-5232</strong>
+* <strong>Three year projected merchant increase for transaction search performance</strong> -</p>
+<blockquote>
+<div><p>GIVEN a corporate merchant with X transactions processed over the last 365 days
+AND a historic set of data existing to support up to 950 merchants
+WHEN the merchant performs a transaction search for all their transactions over the course of a year
+THEN the search returns the results in an average response of 10 seconds and 90% response of 12 seconds.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Faster ingestion performance</strong> - At least 20k/s throughput for structured data ingestion, but ideally 100k/s or more. (The throughput is also dependent on size of row which is not accounted here but obviously we should see higher throughput for smaller row sizes, but 20k is the absolute minimum the system should meet)</p>
+</li>
+</ul>
+</div>
+<div class="section" id="proposed-architecture">
+<h2>Proposed architecture<a class="headerlink" href="#proposed-architecture" title="Permalink to this headline">¶</a></h2>
+<p>This picture depicts where the product would sit within our existing architecture and interactions with other components:</p>
+<img alt="images/integral.png" src="images/integral.png" />
+</div>
+<div class="section" id="initial-selection">
+<h2>Initial selection<a class="headerlink" href="#initial-selection" title="Permalink to this headline">¶</a></h2>
+<p>With what we are after it’s unlikely a single product can satisfy all requirements, so it’s likely there will be trade-offs therefore we have widen the scope to include a variety of data technologies. Though I must mention with plethora of products available (see below) doing an initial selection was not easy.</p>
+<img alt="images/DataPlatforms.png" src="images/DataPlatforms.png" />
+<p>Initial selection was based on product literature, white-papers, product specifications, and external agency ranking (Forrester and DB-Engines). This table shows high level requirement-features and if the product meets it:</p>
+<table border="1" class="colwidths-auto docutils">
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Product</th>
+<th class="head">Memory</th>
+<th class="head">Disk</th>
+<th class="head">cStore</th>
+<th class="head">Search</th>
+<th class="head">Scale</th>
+<th class="head">HA</th>
+<th class="head">XDCR</th>
+<th class="head">Lang</th>
+<th class="head">Rel</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Solr</td>
+<td>MMapFS</td>
+<td>✔</td>
+<td>&#160;</td>
+<td>Lucene</td>
+<td>Hor</td>
+<td>✔</td>
+<td>✔</td>
+<td>Java</td>
+<td>2004</td>
+</tr>
+<tr class="row-odd"><td>Elastic</td>
+<td>MMapFS</td>
+<td>✔</td>
+<td>&#160;</td>
+<td>Lucene</td>
+<td>Hor</td>
+<td>✔</td>
+<td>✔</td>
+<td>Java</td>
+<td>2004</td>
+</tr>
+<tr class="row-even"><td>Oracle</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
+<td>Inverted</td>
+<td>RAC</td>
+<td>✖</td>
+<td>✔</td>
+<td>C</td>
+<td>1997</td>
+</tr>
+<tr class="row-odd"><td>PG CitusDB</td>
+<td>✖</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
+<td>Hor</td>
+<td>✔</td>
+<td>✔</td>
+<td>C</td>
+<td>1996</td>
+</tr>
+<tr class="row-even"><td>MariaDB</td>
+<td>✖</td>
+<td>✔</td>
+<td>✔</td>
+<td>✖</td>
+<td>Hor</td>
+<td>✔</td>
+<td>✔</td>
+<td>C</td>
+<td>2009</td>
+</tr>
+<tr class="row-odd"><td>MemSQL</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
+<td>beta</td>
+<td>Hor</td>
+<td>✔</td>
+<td>✔</td>
+<td>C++</td>
+<td>2013</td>
+</tr>
+<tr class="row-even"><td>EXASOL</td>
+<td>✔ store</td>
+<td>&#160;</td>
+<td>✔</td>
+<td>✖</td>
+<td>Hor</td>
+<td>✔</td>
+<td>✔</td>
+<td>&#160;</td>
+<td>2000</td>
+</tr>
+<tr class="row-odd"><td>Vertica</td>
+<td>✖</td>
+<td>✔</td>
+<td>✔</td>
+<td>✖</td>
+<td>Hor</td>
+<td>✔</td>
+<td>✔</td>
+<td>&#160;</td>
+<td>2005</td>
+</tr>
+<tr class="row-even"><td>VoltDB</td>
+<td>✔</td>
+<td><blockquote class="first last">
+<div>✔</div></blockquote>
+</td>
+<td>✖</td>
+<td>✖</td>
+<td>Hor</td>
+<td>✔</td>
+<td>✔</td>
+<td>Java</td>
+<td>2010</td>
+</tr>
+<tr class="row-odd"><td>Cassandra</td>
+<td>✖</td>
+<td>✔</td>
+<td>&#160;</td>
+<td>✖</td>
+<td>Hor</td>
+<td>✔</td>
+<td>✔</td>
+<td>Java</td>
+<td>2008</td>
+</tr>
+<tr class="row-even"><td>Couchbase</td>
+<td>✔</td>
+<td>✔</td>
+<td>&#160;</td>
+<td>✔✔</td>
+<td>Hor</td>
+<td>✔</td>
+<td>✔</td>
+<td>C++</td>
+<td>2010</td>
+</tr>
+<tr class="row-odd"><td>MongoDB</td>
+<td>✔ store</td>
+<td>✔</td>
+<td>&#160;</td>
+<td>✔</td>
+<td>Hor</td>
+<td><blockquote class="first last">
+<div>✔</div></blockquote>
+</td>
+<td>✔</td>
+<td>C++</td>
+<td>2009</td>
+</tr>
+<tr class="row-even"><td>Ignite(GG)</td>
+<td>✔ store</td>
+<td>✔</td>
+<td>&#160;</td>
+<td>Lucene</td>
+<td>Hor</td>
+<td>✔</td>
+<td>✔</td>
+<td>Java</td>
+<td>2007</td>
+</tr>
+<tr class="row-odd"><td>GigaSpaces</td>
+<td>✔</td>
+<td>✔</td>
+<td>&#160;</td>
+<td>Lucene</td>
+<td>Hor</td>
+<td>✔</td>
+<td>✔</td>
+<td>Java</td>
+<td>2000</td>
+</tr>
+<tr class="row-even"><td>Coherence</td>
+<td><blockquote class="first last">
+<div>✔</div></blockquote>
+</td>
+<td>✔</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>Hor</td>
+<td>✔</td>
+<td>✔</td>
+<td>Java</td>
+<td>2005</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="product-selection-and-evaluation">
+<h2>Product selection and evaluation<a class="headerlink" href="#product-selection-and-evaluation" title="Permalink to this headline">¶</a></h2>
+<p>For the purpose of evaluation we have selected Solr, Elasticsearch, Apache Ignite, Oracle 12c In-Memory and MemSQL.</p>
+<p>The selected products were tested on a single VM on GCP (4 vCPUs + 15GB RAM) with 100 million records. Oracle 12c In-Memory and MemSQL were tested on bigger machines with bigger volume.</p>
+<ul class="simple">
+<li><a class="reference external" href="solr/README.md">Solr</a></li>
+<li><a class="reference external" href="elastic/README.md">Elasticsearch</a></li>
+<li><a class="reference external" href="ignite-gg/README.md">Apache Ignite</a></li>
+<li><a class="reference external" href="memsql/README.md">MemSQL</a></li>
+<li><a class="reference external" href="oracle12c/README.md">Oracle 12c In-Memory</a></li>
+</ul>
+</div>
+<div class="section" id="data-role-filter">
+<h2>Data role filter<a class="headerlink" href="#data-role-filter" title="Permalink to this headline">¶</a></h2>
+<p>How to enforce data role filter to searches on the ‘fast search’ product? There are various ways to do this and it ties up with the choice of tool:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Relational Joins - If the data role filter and the transaction data stores are on the same database, then a join would be most appropriate in this case.
+- Oracle 12c In-Memory
+- MemSQL</li>
+<li>Distributed Joins - Join on the grid such as Apache Ignite. Colocated joins more performant than non-colocated.
+- Apache Ignite (GridGain)</li>
+<li>Client side push-down filter - The client constructs a list of data role filter (e.g. list of MIDs) using a query against a master data store, and then applies the list as filter to the second query against transactional data store. Both data stores can be same or entirely different technologies etc. The PoC should prove that we can run complex searches that also have a list of, say, 5000 MIDs added to the search criteria.
+- All tools</li>
+<li>Terms Lookup mechanism - Instead of specifying a filter with a lot of values it can be beneficial to fetch those values from a document in another index.
+- Elasticsearch</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="decision-analysis">
+<h2>Decision analysis<a class="headerlink" href="#decision-analysis" title="Permalink to this headline">¶</a></h2>
+<img alt="images/benchmark.png" src="images/benchmark.png" />
+</div>
+<div class="section" id="review-and-recommendation">
+<h2>Review and recommendation<a class="headerlink" href="#review-and-recommendation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sorting">
+<h3>Sorting<a class="headerlink" href="#sorting" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Sorting (order by) is the biggest blocker for sub-second performance for pagination queries</li>
+<li>Apply filter to reduce the number of rows to 100K ideally or 1M max. (There is no way user is going to paginate through all the pages. Download is not real-time, need not be sorted, etc.)</li>
+<li>User can be shown the count and asked to apply more filter or reduce date range to bring it under the MAX allowed value.</li>
+<li>Or the application take the interim count and reduce the date range - assuming sorting is always and only on date transaction/processing column.</li>
+</ul>
+</div>
+<div class="section" id="coherence-imdg">
+<h3>Coherence IMDG<a class="headerlink" href="#coherence-imdg" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Already using Coherence for WPOS session tokens</li>
+<li>Next plan is to extend usage with Master data caching such as merchant and user details for WPOS</li>
+<li>We put Coherence to test by adding further use cases with increasing complexity</li>
+<li>Build our experience on IMDGs in terms of replication &amp; partitioned caches, on-heap &amp; off-heap memory, correct GC, managing several nodes, managing XDCR, nodes rebalancing, collocated and non-collocated queries, synchronisation, goldengate integration, etc.</li>
+<li>Going with other IMDGs - GG/Ignite, Hazlecast, JBoss Infinispan, Gigaspaces XAP - and storing and managing billions of rows at this moment is too risky, but we shouldn’t rule out for future based on our Coherence extension experience.</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3>Oracle 12c In-Memory<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>We don’t have In-Memory license</li>
+<li>In-memory performance was very good except when the range of input rows is huge (&gt;100M) to sort (order by)</li>
+<li>In-memory columnstore is not first class citizen unlike other memory products where the data moves through memory to persistence layer. Oracle In-memory columnstore is seeded from disk.</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3>MemSQL<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Good performance for billion of rows (MemSQL did a PoC with 26B rows)</li>
+<li>Very fast ingestion speed (&gt; 100k/s)</li>
+<li>Data is stored ordered by index key. Reversing the order of index keys sort order results in very poor performance as it cannot use fast OrderedColumnstoreScan anymore.</li>
+<li>Queries which are not able to fan out to all nodes affects performance. (This should be seen with more testing to compare concurrent users using only one shard compared to concurrent fan-out queries using all shards - this could balance out itself.)</li>
+<li>Columnstore is built for sequential access, therefore random access on event-id has to be measured.</li>
+<li>It’s very likely that Corporate and SMEs will have different table design strategies. Performance issues can be seen for border merchants - like small corporates using SME table and vice-versa.</li>
+<li>Some query plan issues has been seen during PoC. Working with MemSQL on that.</li>
+<li>Some disk space increased usage during ingestion seen during PoC. Working with MemSQL on that.</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>Elasticsearch<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Good tool of choice in non-relational space focussed on searches.</li>
+<li>Certain aggregations are approximate - such as count distinct and percentiles aggregation. (therefore all aggregations output should be verified for reliability.)</li>
+<li>Aggregation performance should be evaluated.</li>
+<li>SQL query support coming soon - though applications doesn’t need it. Current query DSL is more than enough.</li>
+<li>Terms filter with join to another index to be evaluated for data role filter.</li>
+<li>Elastic support license cost?</li>
+</ul>
+</div>
+</div>
+<div class="section" id="performance-test-results">
+<h2>Performance test results<a class="headerlink" href="#performance-test-results" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>MemSQL vs Elasticsearch</li>
+<li>600M rows</li>
+<li>12000 outlets</li>
+<li>10 users with two having access to 5000 outlets, and a user each with access to 1000, 500, 100, 50, 10, 5, 2 and 1 outlet.</li>
+<li>2 VMs - with 8vCPUs and 20-30GB RAM</li>
+<li>Both MemSQL and Elastic operating in cluster mode
+* MemSQL - 1 aggregator nodes and 3 leaf (data) nodes
+* Elastic - 2 nodes (master,data,ingestion) with 4 shards</li>
+<li>Set of 11 queries with mix of pagination, aggregation and lookup by event-id</li>
+<li>Each query ran twice for the same user (so consider buffer(hot)-disk(cold) and first time exceution plan creation, especially for MemSQL as it creates .so objects)</li>
+<li>Elastic didn’t used term lookup for data role filter, rather it used a simple range filter for outlets.</li>
+</ul>
+<div class="section" id="full-test-results">
+<h3>Full test results<a class="headerlink" href="#full-test-results" title="Permalink to this headline">¶</a></h3>
+<p><strong>MemSQL</strong></p>
+<img alt="images/mem-jmeter-full.png" src="images/mem-jmeter-full.png" />
+<p><strong>Elastic</strong></p>
+<img alt="images/elastic-jmeter-full.png" src="images/elastic-jmeter-full.png" />
+</div>
+<div class="section" id="sme-test-results-users-with-1-10-outlets-access">
+<h3>SME test results (users with 1-10 outlets access)<a class="headerlink" href="#sme-test-results-users-with-1-10-outlets-access" title="Permalink to this headline">¶</a></h3>
+<p><strong>MemSQL</strong></p>
+<img alt="images/mem-jmeter-sme-1-10-users.png" src="images/mem-jmeter-sme-1-10-users.png" />
+<p><strong>Elastic</strong></p>
+<img alt="images/elastic-jmeter-sme-1-10-users.png" src="images/elastic-jmeter-sme-1-10-users.png" />
+</div>
+<div class="section" id="corp-test-results-users-with-50-5k-outlets-access">
+<h3>CORP test results (users with 50-5k outlets access)<a class="headerlink" href="#corp-test-results-users-with-50-5k-outlets-access" title="Permalink to this headline">¶</a></h3>
+<p><strong>MemSQL</strong></p>
+<img alt="images/mem-jmeter-corp-50-5k-users.png" src="images/mem-jmeter-corp-50-5k-users.png" />
+<p><strong>Elastic</strong></p>
+<img alt="images/elastic-jmeter-corp-50-5k-users.png" src="images/elastic-jmeter-corp-50-5k-users.png" />
+</div>
+</div>
+<div class="section" id="external-benchmarking">
+<h2>External Benchmarking<a class="headerlink" href="#external-benchmarking" title="Permalink to this headline">¶</a></h2>
+<p>A very popular external <a class="reference external" href="http://tech.marksblogg.com/benchmarks.html">benchmarking</a> was also reviewed:</p>
+<img alt="images/mark_benchmark.png" src="images/mark_benchmark.png" />
+</div>
+<div class="section" id="proposed-architecture-diagram">
+<h2>Proposed Architecture Diagram<a class="headerlink" href="#proposed-architecture-diagram" title="Permalink to this headline">¶</a></h2>
+<img alt="images/integral-final.png" src="images/integral-final.png" />
+<ul class="simple">
+<li>Possible use of Spark based ETL (Spark streaming, Spark SQL, etc.)</li>
+<li>Possible use of parquet file based Spark foundation data layer accessible through Spark SQL (shown as ? above)</li>
+<li>Possible use of Airflow as ETL workflow tool</li>
+</ul>
+</div>
+<div class="section" id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Test MemSQL and Elasticsearch on PROD sized infrastructure and data volumes and run all performance tests</li>
+<li>Design and provision infrastructure on cloud or on-prem</li>
+<li>Use data generator or PPE data</li>
+<li>Use existing performance test pack (would need to change to adapt to SQLs and Elastic APIs)</li>
+<li>Put together a team for above activities with representation from SA, Infra, Dev, BA, Test, etc.</li>
+<li>Get business, Infra, Support buy-in for above</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="confluent.html" class="btn btn-neutral float-right" title="Confluent 4.1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="memsql.html" class="btn btn-neutral" title="MemSQL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

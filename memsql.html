@@ -1,0 +1,307 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MemSQL &mdash; Data Architecture</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Elasticsearch" href="elasticsearch.html" />
+    <link rel="prev" title="Benchmarking Summary" href="benchmark.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> High Performance Data Architecture 0.1
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmarking Summary</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MemSQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elasticsearch.html">Elasticsearch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="confluent.html">Confluent 4.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bigquery.html">BigQuery</a></li>
+</ul>
+
+            
+          
+    <br/>
+    <br/>
+    <a href=""><img src="_images/GitHub-Mark-Light-32px.png">&nbsp;Go to Github</a>
+  
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">High Performance Data Architecture 0.1</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>MemSQL</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="memsql">
+<h1>MemSQL<a class="headerlink" href="#memsql" title="Permalink to this headline">¶</a></h1>
+<p>create table mymemsqldb.yellow_trips (
+vendor_id           VARCHAR(5),
+pickup_datetime DATETIME,
+dropoff_datetime DATETIME,
+pickup_longitude DECIMAL(15,8),
+pickup_latitude DECIMAL(15,8),
+dropoff_longitude DECIMAL(15,8),
+dropoff_latitude DECIMAL(15,8),
+rate_code        VARCHAR(5),
+passenger_count  TINYINT,
+trip_distance FLOAT,
+payment_type VARCHAR(5),
+fare_amount FLOAT,
+extra FLOAT,
+mta_tax  FLOAT,
+imp_surcharge FLOAT,
+tip_amount FLOAT,
+tolls_amount FLOAT,
+total_amount FLOAT,
+store_and_fwd_flag VARCHAR(5),
+key (pickup_datetime,dropoff_datetime,vendor_id) using clustered columnstore,
+shard key (pickup_datetime, dropoff_datetime));</p>
+<p>load data infile ‘/home/suds123/trips000000001*.gz’ into table mymemsqldb.yellow_trips columns terminated by ‘,’ optionally enclosed by ‘”’ lines terminated by ‘n’  ignore 1 lines (vendor_id,&#64;pickup_datetime,&#64;dropoff_datetime,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude,rate_code,passenger_count,trip_distance,payment_type,fare_amount,extra,mta_tax,imp_surcharge,tip_amount,tolls_amount,total_amount,store_and_fwd_flag) set pickup_datetime = STR_TO_DATE(SUBSTR(&#64;pickup_datetime,1,19), ‘%Y-%m-%d %H:%i:%s’),dropoff_datetime = STR_TO_DATE(SUBSTR(&#64;dropoff_datetime,1,19), ‘%Y-%m-%d %H:%i:%s’);</p>
+<p>SELECT DATE_TRUNC(‘month’,pickup_datetime) month, COUNT(*) trips
+FROM  mymemsqldb.yellow_trips
+GROUP BY  1
+ORDER BY  1;
+#1 - 78 rows in set (6.66 sec)
+#2 - 78 rows in set (5.90 sec)
+#3 - 78 rows in set (5.08 sec)
+SELECT EXTRACT(HOUR FROM pickup_datetime) hour,</p>
+<blockquote>
+<div><blockquote>
+<div>ROUND(AVG(trip_distance / TIMESTAMPDIFF (SECOND,pickup_datetime,dropoff_datetime))*3600, 1) speed</div></blockquote>
+<p>FROM mymemsqldb.yellow_trips</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>WHERE trip_distance &gt; 0</dt>
+<dd>AND fare_amount/trip_distance BETWEEN 2 AND 10
+AND dropoff_datetime &gt; pickup_datetime
+AND pickup_datetime &gt;= ‘2015-01-01’ AND pickup_datetime &lt; ‘2016-01-01’</dd>
+</dl>
+<p>GROUP BY  1
+ORDER BY  1;
+#1 - 24 rows in set (4.12 sec)
+#2 - 24 rows in set (3.22 sec)
+#3 - 24 rows in set (1.51 sec)
+SELECT DAYOFWEEK(pickup_datetime) DAY_OF_WEEK,</p>
+<blockquote>
+<div><blockquote>
+<div>ROUND(AVG(trip_distance / TIMESTAMPDIFF(SECOND,pickup_datetime,dropoff_datetime))*3600, 1) speed</div></blockquote>
+<p>FROM mymemsqldb.yellow_trips</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>WHERE trip_distance &gt; 0</dt>
+<dd>AND fare_amount/trip_distance BETWEEN 2 AND 10
+AND dropoff_datetime &gt; pickup_datetime
+AND pickup_datetime &gt;= ‘2014-01-01’ AND pickup_datetime &lt; ‘2015-01-01’</dd>
+</dl>
+<p>GROUP BY  1
+ORDER BY  1;
+#1 - 7 rows in set (6.61 sec)
+#2 - 7 rows in set (4.81 sec)
+#3 - 7 rows in set (2.88 sec)
+SELECT *</p>
+<blockquote>
+<div>FROM mymemsqldb.yellow_trips</div></blockquote>
+<dl class="docutils">
+<dt>WHERE trip_distance &gt; 10</dt>
+<dd>AND passenger_count &gt; 1
+AND vendor_id = ‘CMT’
+AND pickup_datetime &gt;= ‘2013-01-01’ AND pickup_datetime &lt; ‘2014-01-01’</dd>
+</dl>
+<p>ORDER BY pickup_datetime
+LIMIT 10 OFFSET 100;
+#1 - 10 rows in set (4.89 sec)
+#2 - 10 rows in set (0.66 sec)
+#3 - 10 rows in set (0.31 sec)</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="elasticsearch.html" class="btn btn-neutral float-right" title="Elasticsearch" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="benchmark.html" class="btn btn-neutral" title="Benchmarking Summary" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>
