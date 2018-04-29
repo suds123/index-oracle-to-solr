@@ -170,18 +170,22 @@
 <h2>Infrastructure<a class="headerlink" href="#infrastructure" title="Permalink to this headline">¶</a></h2>
 <p>2 VMs provisioned on Google Cloud Platform.</p>
 <ul class="simple">
-<li>VM#1
-- Machine type - custom (8 vCPUs, 20 GB memory)
-- CPU platform - Intel Broadwell
-- 50GB SSD persistent disk
-- source image - debian-9-stretch-v20180307
-- MemSQL - Master aggregator and a leaf node</li>
-<li>VM#2
-- Machine type - custom (16 vCPUs, 20 GB memory)
-- CPU platform - Intel Broadwell
-- 90GB SSD persistent disk
-- source image - debian-9-stretch-v20180307
-- MemSQL - Two leaf nodes</li>
+<li>VM#1<ul>
+<li>Machine type - custom (8 vCPUs, 20 GB memory)</li>
+<li>CPU platform - Intel Broadwell</li>
+<li>50GB SSD persistent disk</li>
+<li>source image - debian-9-stretch-v20180307</li>
+<li>MemSQL - Master aggregator and a leaf node</li>
+</ul>
+</li>
+<li>VM#2<ul>
+<li>Machine type - custom (16 vCPUs, 20 GB memory)</li>
+<li>CPU platform - Intel Broadwell</li>
+<li>90GB SSD persistent disk</li>
+<li>source image - debian-9-stretch-v20180307</li>
+<li>MemSQL - Two leaf nodes</li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="install-memsql">
@@ -241,10 +245,10 @@
    <span class="n">shard</span> <span class="n">key</span> <span class="p">(</span><span class="n">pickup_datetime</span><span class="p">,</span> <span class="n">dropoff_datetime</span><span class="p">));</span>
 </pre></div>
 </div>
-<dl class="docutils">
-<dt>Copy yellow taxi dataset from google bucket to VM::</dt>
-<dd>gsutil cp gs://yellow_taxi_trips/data/trips0000000000*.gz .</dd>
-</dl>
+<p>Copy yellow taxi dataset from google bucket to VM:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gsutil</span> <span class="n">cp</span> <span class="n">gs</span><span class="p">:</span><span class="o">//</span><span class="n">yellow_taxi_trips</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">trips0000000000</span><span class="o">*.</span><span class="n">gz</span> <span class="o">.</span>
+</pre></div>
+</div>
 <p>The above downloads all the ~1000 .gz compressed csv files on to local VM disk.</p>
 <p>MemSQL can directly load .gz files in to tables:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load</span> <span class="n">data</span> <span class="n">infile</span> <span class="s1">&#39;/home/suds/trips00000000*.gz&#39;</span> <span class="n">into</span> <span class="n">table</span> <span class="n">mymemsqldb</span><span class="o">.</span><span class="n">yellow_trips</span> <span class="n">columns</span> <span class="n">terminated</span> <span class="n">by</span> <span class="s1">&#39;,&#39;</span> <span class="n">optionally</span> <span class="n">enclosed</span> <span class="n">by</span> <span class="s1">&#39;&quot;&#39;</span> <span class="n">lines</span> <span class="n">terminated</span> <span class="n">by</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>  <span class="n">ignore</span> <span class="mi">1</span> <span class="n">lines</span> <span class="p">(</span><span class="n">vendor_id</span><span class="p">,</span><span class="nd">@pickup_datetime</span><span class="p">,</span><span class="nd">@dropoff_datetime</span><span class="p">,</span><span class="n">pickup_longitude</span><span class="p">,</span><span class="n">pickup_latitude</span><span class="p">,</span><span class="n">dropoff_longitude</span><span class="p">,</span><span class="n">dropoff_latitude</span><span class="p">,</span><span class="n">rate_code</span><span class="p">,</span><span class="n">passenger_count</span><span class="p">,</span><span class="n">trip_distance</span><span class="p">,</span><span class="n">payment_type</span><span class="p">,</span><span class="n">fare_amount</span><span class="p">,</span><span class="n">extra</span><span class="p">,</span><span class="n">mta_tax</span><span class="p">,</span><span class="n">imp_surcharge</span><span class="p">,</span><span class="n">tip_amount</span><span class="p">,</span><span class="n">tolls_amount</span><span class="p">,</span><span class="n">total_amount</span><span class="p">,</span><span class="n">store_and_fwd_flag</span><span class="p">)</span> <span class="nb">set</span> <span class="n">pickup_datetime</span> <span class="o">=</span> <span class="n">STR_TO_DATE</span><span class="p">(</span><span class="n">SUBSTR</span><span class="p">(</span><span class="nd">@pickup_datetime</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">19</span><span class="p">),</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:</span><span class="si">%i</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">),</span><span class="n">dropoff_datetime</span> <span class="o">=</span> <span class="n">STR_TO_DATE</span><span class="p">(</span><span class="n">SUBSTR</span><span class="p">(</span><span class="nd">@dropoff_datetime</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">19</span><span class="p">),</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:</span><span class="si">%i</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">);</span>
@@ -289,38 +293,40 @@
 </div>
 <div class="section" id="query-3">
 <h3>Query#3<a class="headerlink" href="#query-3" title="Permalink to this headline">¶</a></h3>
-<dl class="docutils">
-<dt>SELECT DAYOFWEEK(pickup_datetime) DAY_OF_WEEK,</dt>
-<dd><blockquote class="first">
-<div>ROUND(AVG(trip_distance / TIMESTAMPDIFF(SECOND,pickup_datetime,dropoff_datetime))*3600, 1) speed</div></blockquote>
-<p class="last">FROM mymemsqldb.yellow_trips</p>
-</dd>
-<dt>WHERE trip_distance &gt; 0</dt>
-<dd>AND fare_amount/trip_distance BETWEEN 2 AND 10
-AND dropoff_datetime &gt; pickup_datetime
-AND pickup_datetime &gt;= ‘2014-01-01’ AND pickup_datetime &lt; ‘2015-01-01’</dd>
-</dl>
-<p>GROUP BY  1
-ORDER BY  1;</p>
-<p>#1 - 7 rows in set (6.61 sec)
-#2 - 7 rows in set (4.81 sec)
-#3 - 7 rows in set (2.88 sec)</p>
+<p>What was the average speed of Yellow taxi trips in 2014 by day of week?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">DAYOFWEEK</span><span class="p">(</span><span class="n">pickup_datetime</span><span class="p">)</span> <span class="n">DAY_OF_WEEK</span><span class="p">,</span>
+       <span class="n">ROUND</span><span class="p">(</span><span class="n">AVG</span><span class="p">(</span><span class="n">trip_distance</span> <span class="o">/</span> <span class="n">TIMESTAMPDIFF</span><span class="p">(</span><span class="n">SECOND</span><span class="p">,</span><span class="n">pickup_datetime</span><span class="p">,</span><span class="n">dropoff_datetime</span><span class="p">))</span><span class="o">*</span><span class="mi">3600</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="n">speed</span>
+  <span class="n">FROM</span> <span class="n">mymemsqldb</span><span class="o">.</span><span class="n">yellow_trips</span>
+ <span class="n">WHERE</span> <span class="n">trip_distance</span> <span class="o">&gt;</span> <span class="mi">0</span>
+   <span class="n">AND</span> <span class="n">fare_amount</span><span class="o">/</span><span class="n">trip_distance</span> <span class="n">BETWEEN</span> <span class="mi">2</span> <span class="n">AND</span> <span class="mi">10</span>
+   <span class="n">AND</span> <span class="n">dropoff_datetime</span> <span class="o">&gt;</span> <span class="n">pickup_datetime</span>
+   <span class="n">AND</span> <span class="n">pickup_datetime</span> <span class="o">&gt;=</span> <span class="s1">&#39;2014-01-01&#39;</span> <span class="n">AND</span> <span class="n">pickup_datetime</span> <span class="o">&lt;</span> <span class="s1">&#39;2015-01-01&#39;</span>
+ <span class="n">GROUP</span> <span class="n">BY</span>  <span class="mi">1</span>
+ <span class="n">ORDER</span> <span class="n">BY</span>  <span class="mi">1</span><span class="p">;</span>
+
+<span class="c1">#1 - 7 rows in set (6.61 sec)</span>
+<span class="c1">#2 - 7 rows in set (4.81 sec)</span>
+<span class="c1">#3 - 7 rows in set (2.88 sec)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="query-4">
 <h3>Query#4<a class="headerlink" href="#query-4" title="Permalink to this headline">¶</a></h3>
-<dl class="docutils">
-<dt>SELECT *</dt>
-<dd>FROM mymemsqldb.yellow_trips</dd>
-<dt>WHERE trip_distance &gt; 10</dt>
-<dd>AND passenger_count &gt; 1
-AND vendor_id = ‘CMT’
-AND pickup_datetime &gt;= ‘2013-01-01’ AND pickup_datetime &lt; ‘2014-01-01’</dd>
-</dl>
-<p>ORDER BY pickup_datetime
-LIMIT 10 OFFSET 100;</p>
-<p>#1 - 10 rows in set (4.89 sec)
-#2 - 10 rows in set (0.66 sec)
-#3 - 10 rows in set (0.31 sec)</p>
+<p>Show the first 10 rows offset 100 in 2013 for CMT vendor, trip_distance &gt; 10 and #passengers &gt; 1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="o">*</span>
+  <span class="n">FROM</span> <span class="n">mymemsqldb</span><span class="o">.</span><span class="n">yellow_trips</span>
+ <span class="n">WHERE</span> <span class="n">trip_distance</span> <span class="o">&gt;</span> <span class="mi">10</span>
+   <span class="n">AND</span> <span class="n">passenger_count</span> <span class="o">&gt;</span> <span class="mi">1</span>
+   <span class="n">AND</span> <span class="n">vendor_id</span> <span class="o">=</span> <span class="s1">&#39;CMT&#39;</span>
+   <span class="n">AND</span> <span class="n">pickup_datetime</span> <span class="o">&gt;=</span> <span class="s1">&#39;2013-01-01&#39;</span> <span class="n">AND</span> <span class="n">pickup_datetime</span> <span class="o">&lt;</span> <span class="s1">&#39;2014-01-01&#39;</span>
+ <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">pickup_datetime</span>
+ <span class="n">LIMIT</span> <span class="mi">10</span> <span class="n">OFFSET</span> <span class="mi">100</span><span class="p">;</span>
+
+<span class="c1">#1 - 10 rows in set (4.89 sec)</span>
+<span class="c1">#2 - 10 rows in set (0.66 sec)</span>
+<span class="c1">#3 - 10 rows in set (0.31 sec)</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
