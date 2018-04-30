@@ -160,10 +160,11 @@ bucket “yellow_taxi_trips” which gives a static copy of the public dataset (
 The export process breaks down the dataset into compressed csv files numbering ~1000 .gz files and places them on the bucket.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">This benchmarking is not promoting any technology as such and is an attempt to compare what is out there. Though these benchmarks used the same dataset, I wouldn’t consider any two as comparing apples to apples. The times recorded don’t necessarily
-reflect the top performance these systems are capable of. It’s likely each system could have performed faster if more effort was put into setup,
-configuration and/or better hardware was available. There are some cases where I re-ran a benchmark with more tuning to achieve a better result and
-in these cases only the fastest benchmark will be listed below. I’m interested in learning of any optimisations that can improve performance. Please open an <cite>issue &lt;&gt;_</cite> if you’ve got any configuration settings to share.</p>
+<p class="last">This benchmarking is not promoting any technology as such and is an attempt to compare what is out there. Though these benchmarks used the same dataset, I wouldn’t consider any two as comparing apples to apples.
+The times recorded don’t necessarily reflect the top performance these systems are capable of.
+It’s likely each system could have performed faster if more effort was put into setup, configuration and/or better hardware was available.
+Except cloud databases such as BigQuery, the exercise was constrained by 24 vCPU limit within a zone on google cloud which even things out on CPU front.
+There are some cases where I re-ran a benchmark with more tuning to achieve a better result and in these cases only the fastest benchmark will be listed below. I’m interested in learning of any optimisations that can improve performance. Please open an <cite>issue &lt;&gt;_</cite> if you’ve got any configuration settings to share.</p>
 </div>
 <p>The table is sorted by the average time across all queries:</p>
 <img alt="images/benchmark.png" src="images/benchmark.png" />
